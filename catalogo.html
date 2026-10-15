@@ -7,9 +7,9 @@
 <title>Catálogo de oportunidades | ROP</title>
 <meta name="theme-color" content="#09111f"><meta name="description" content="Referências de pesquisa e calculadora de margem do ROP. Confira fontes, taxas e custos antes de comprar para revender.">
 <style>
-:root{--bg:#09111f;--panel:#111e32;--line:#2b405d;--muted:#a9b9d0;--mint:#8ee6c2;--gold:#f5d48a}
+:root{--bg:#04142d;--panel:#09264b;--line:#164879;--muted:#b4c8e5;--mint:#21a5ff;--gold:#ffc66d}
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(ellipse at 90% 0%,#1b3150,transparent 38%),var(--bg);color:#f2f6ff;font:16px/1.55 system-ui,sans-serif}
+body{margin:0;background:radial-gradient(ellipse at 90% 0%,#0b4382,transparent 38%),radial-gradient(ellipse at 0% 45%,#071f43,transparent 45%),var(--bg);color:#f2f6ff;font:16px/1.55 system-ui,sans-serif}
 .wrap{max-width:1080px;margin:auto;padding:20px}
 nav{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 0;border-bottom:1px solid #ffffff20;font-weight:bold}
 .brand{display:flex;align-items:center;gap:10px}
@@ -18,19 +18,19 @@ nav{display:flex;justify-content:space-between;align-items:center;gap:12px;paddi
 .logo-type strong{letter-spacing:.12em;font-size:14px;color:#8ee6c2}
 .logo-type span{font-size:12px;font-weight:500;color:var(--muted)}
 .logo{background:linear-gradient(145deg,#a5f3d1,#55c99b);color:#08241a;padding:8px 12px;border-radius:10px}
-a{color:var(--mint);text-decoration:none}
+a{color:#31b2ff;text-decoration:none}
 h1{font-size:clamp(30px,5vw,44px);line-height:1.1}
 p{color:var(--muted)}
 .panel,.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;margin:15px 0}
-.notice{background:#292719;color:#f7e3ad;padding:14px;border-radius:12px;border:1px solid #66532c}
+.notice{background:#122f51;color:#cce7ff;padding:14px;border-radius:12px;border:1px solid #1763a2}
 .layout{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
 .filters,.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 label{display:block;color:var(--muted);font-size:13px;margin-bottom:5px}
-input,select{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;background:#091525;color:white;font:inherit}
-button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;background:var(--mint);color:#092017;font-weight:bold;cursor:pointer}
-.secondary{background:#24364f;color:white;border:1px solid var(--line)}
-.product{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:14px 0;background:#0b1729}
-.product-photo{width:100%;height:155px;object-fit:cover;display:block;background:#15253a}
+input,select{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;background:#061a35;color:white;font:inherit}
+button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;background:linear-gradient(120deg,#0787f9,#24b4ff);color:white;font-weight:bold;cursor:pointer;box-shadow:0 6px 20px #007df033}
+.secondary{background:#082143;color:white;border:1px solid #1763a2;box-shadow:none}
+.product{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:14px 0;background:#082143}
+.product-photo{width:100%;height:155px;object-fit:cover;display:block;background:#eaf4ff}
 .product-photo:not([src]){display:none}
 .product-body{padding:15px}
 .product h3{margin:10px 0 6px;font-size:18px}
@@ -42,10 +42,10 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 @media(min-width:760px){#products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.product{margin:0}}
 .tag{font-size:11px;color:var(--gold);background:#2d3b50;border-radius:20px;padding:4px 8px}
 .small{font-size:12px}
-.result{background:#102d2a;border:1px solid #357c68;border-radius:12px;padding:14px;margin-top:15px}
+.result{background:#082d54;border:1px solid #1763a2;border-radius:12px;padding:14px;margin-top:15px}
 .result strong{font-size:25px;color:var(--mint)}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
-.stat{background:#0c192b;border:1px solid var(--line);padding:12px;border-radius:12px}
+.stat{background:#071d3b;border:1px solid var(--line);padding:12px;border-radius:12px}
 .stat strong{display:block;font-size:20px}
 @media(max-width:700px){.layout{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}}
 @media(max-width:420px){.filters,.fields{grid-template-columns:1fr}}
@@ -55,7 +55,7 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 <div class="wrap">
 <nav><a class="brand" href="index.html" aria-label="ROP — Página inicial">
 <svg class="logo-icon" viewBox="0 0 64 64" role="img" aria-label="Logo ROP"><rect x="2" y="2" width="60" height="60" rx="16" fill="#8ee6c2"/><path d="M16 45V18h15c9 0 14 4 14 12 0 6-3 10-9 12l10 8H34l-9-8h-1v8H16zm8-17v7h7c4 0 6-1 6-4s-2-3-6-3h-7z" fill="#08241a"/><circle cx="48" cy="17" r="5" fill="#08241a"/></svg>
-<span class="logo-type"><strong>ROP</strong><span>Radar de Oportunidades</span></span></a><a href="index.html">Página inicial ↗</a></nav>
+<span class="logo-type"><strong style="color:#31b2ff">ROP</strong><span>Radar de Oportunidades</span></span></a><a href="index.html">Página inicial ↗</a></nav>
 <header>
 <p style="color:var(--mint);font-weight:bold;letter-spacing:1px">PREÇOS E CONTAS, SEM COMPLICAÇÃO</p>
 <h1>Veja o preço.<br><span style="color:var(--mint)">Calcule quanto sobra.</span></h1>
@@ -97,7 +97,7 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 <p class="small">Dica: use um preço de venda realista. O resultado é uma estimativa, não uma garantia de venda.</p>
 </aside>
 </div>
-<footer><p>ROP — Confira preço, frete e procura antes de comprar.</p></footer>
+<footer><p>ROP — Confira preço, frete e procura antes de comprar.</p><p><a href="index.html">← Voltar à página inicial</a></p></footer>
 </div>
 <script>
 const items=[
@@ -166,7 +166,7 @@ function render(){
  <p>${safe(x.note)}</p>
  <div class="price-line"><span class="small">Preço de compra observado/referência</span><strong>${money(x.cost)}</strong></div>
  ${x.market?`<div class="price-line"><span class="small">Referência de venda observada</span><strong>${money(x.market)}</strong></div><p class="small">Spread bruto: <b>${money(x.market-x.cost)}</b> · estimativa líquida com as premissas atuais: <b>${money(x.market-x.cost-x.market*(Math.min(100,Math.max(0,+document.querySelector("#fees").value||0))/100)-Math.max(0,+document.querySelector("#freight").value||0))}</b></p><p class="small"><b>${(x.market-x.cost-x.market*(Math.min(100,Math.max(0,+document.querySelector("#fees").value||0))/100)-Math.max(0,+document.querySelector("#freight").value||0))>=Math.max(20,x.market*.15)?"POTENCIAL":(x.market-x.cost-x.market*(Math.min(100,Math.max(0,+document.querySelector("#fees").value||0))/100)-Math.max(0,+document.querySelector("#freight").value||0))>0?"MARGEM APERTADA":"NÃO COMPENSA"}</b> com taxa de ${document.querySelector("#fees").value}% e custo/frete de ${money(+document.querySelector("#freight").value||0)}. <a href="${x.marketUrl||x.url}" target="_blank" rel="noopener">Conferir anúncio ↗</a></p>`:""}
- <p class="small">${safe(x.source)}</p>${!x.market?`<p class="small" style="border:1px solid #66532c;background:#292719;color:#f7e3ad;padding:9px;border-radius:8px"><b>SEM OPORTUNIDADE VALIDADA:</b> custo abaixo é apenas referência para pesquisa. Ainda falta confirmar uma oferta de compra e um anúncio comparável de venda para este modelo.</p>`:""}
+ <p class="small">${safe(x.source)}</p>${!x.market?`<p class="small" style="border:1px solid #66532c;background:#122f51;color:#cce7ff;padding:9px;border-radius:8px"><b>SEM OPORTUNIDADE VALIDADA:</b> custo abaixo é apenas referência para pesquisa. Ainda falta confirmar uma oferta de compra e um anúncio comparável de venda para este modelo.</p>`:""}
  <div class="product-actions">
  <a class="btn secondary" href="${x.url}" target="_blank" rel="noopener">Ver preço ↗</a>
  <button data-calc="${x.i}">Calcular lucro</button>
