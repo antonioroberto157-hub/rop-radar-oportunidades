@@ -72,7 +72,7 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 <h2>Referências pesquisadas</h2><p class="small">Esta lista mostra somente produtos com preço de varejo observado ou oportunidade validada. Quando falta custo de fornecedor comparável, o item aparece como referência em pesquisa, nunca como lucro confirmado.</p>
 <div class="filters">
 <div><label for="search">Procurar produto</label><input id="search" placeholder="SSD, mouse, hub USB..."></div>
-<div><label for="category">Tipo de produto</label><select id="category"><option value="">Todos</option><option>Armazenamento</option><option>Periféricos</option><option>Rede e acessórios</option><option>Componentes</option><option>Acessórios</option><option>Casa e utilidades</option><option>Ferramentas</option><option>Pet</option><option>Celulares e acessórios</option><option>Áudio e vídeo</option><option>Energia e iluminação</option><option>Cozinha</option><option>Automotivo</option><option>Esporte e fitness</option><option>Moda e acessórios</option><option>Beleza e cuidados pessoais</option><option>Papelaria</option><option>Bebê e infantil</option><option>Viagem e organização</option></select></div>
+<div><label for="category">Tipo de produto</label><select id="category"><option value="">Todos</option><option>Armazenamento</option><option>Periféricos</option><option>Rede e acessórios</option><option>Componentes</option><option>Acessórios</option><option>Casa e utilidades</option><option>Ferramentas</option><option>Pet</option><option>Celulares e acessórios</option><option>Áudio e vídeo</option><option>Energia e iluminação</option><option>Cozinha</option><option>Automotivo</option><option>Esporte e fitness</option><option>Moda e acessórios</option><option>Beleza e cuidados pessoais</option><option>Papelaria</option><option>Bebê e infantil</option><option>Viagem e organização</option><option>Brinquedos</option><option>Decoração</option><option>Higiene e limpeza</option><option>Camping e lazer</option><option>Jardinagem</option><option>Automação e segurança</option><option>Agro e ferramentas</option><option>Material de construção</option><option>Instrumentos musicais</option><option>Produtos para pequenos negócios</option></select></div>
 </div>
 <div id="products"></div>
 </section>
@@ -123,6 +123,11 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 <p>Distribuidora com catálogo de acessórios para celular, áudio, ferramentas, automotivo e utilidades; preços de atacado sob orçamento. <a href="https://www.itblue.com.br/" target="_blank" rel="noopener">Solicitar cotação ↗</a></p></div></div>
 <div class="product"><div class="product-body"><span class="tag">Atacado geral</span><h3>Importscel</h3>
 <p>O site anuncia capinhas a partir de R$ 1,39, fones Bluetooth a partir de R$ 12 e carregador turbo por R$ 9,90; pedido mínimo divulgado de R$ 300. <a href="https://importscel.com.br/" target="_blank" rel="noopener">Ver fornecedor ↗</a></p><p class="small">Valores “a partir de”; confira SKU, quantidade mínima, frete e homologação quando aplicável.</p></div></div>
+
+<div class="product"><div class="product-body"><span class="tag">Brinquedos e pet</span><h3>XP Import — atacado pet</h3><p>Catálogo B2B de brinquedos, mordedores, guias e comedouros. Pedido mínimo divulgado de R$ 600; preços de custo liberados após cadastro. Ainda não é oportunidade validada sem cruzar SKU e venda real.</p><a href="https://xpimport.com/" target="_blank" rel="noopener">Consultar catálogo e custo ↗</a></div></div>
+<div class="product"><div class="product-body"><span class="tag">Variedades e decoração</span><h3>Mabel Import</h3><p>Mais de 5 mil itens anunciados em utilidades, papelaria, higiene, ferramentas, brinquedos, pet, decoração e artigos de festa. Solicitar tabela e comparar SKU exato com preço de venda.</p><a href="https://mabelimport.com.br/" target="_blank" rel="noopener">Consultar catálogo ↗</a></div></div>
+<div class="product"><div class="product-body"><span class="tag">Atacado geral</span><h3>Martins Atacado</h3><p>Catálogo amplo com informática, automotivo, ferramentas, pet, papelaria, esporte, casa e eletroportáteis. Útil para ampliar a busca, mas só entra no radar após cálculo de margem.</p><a href="https://www.martinsatacado.com.br/" target="_blank" rel="noopener">Consultar preços ↗</a></div></div>
+<div class="product"><div class="product-body"><span class="tag">Utilidades e papelaria</span><h3>Atacado São Paulo</h3><p>Catálogo com centenas de utilidades e preços públicos para pesquisa; comparar frete, quantidade e mesmo modelo antes de estimar margem.</p><a href="https://www.atacadosaopaulo.com.br/utilidades" target="_blank" rel="noopener">Ver preços ↗</a></div></div>
 <p class="small">Preços consultados em páginas públicas; podem mudar sem aviso. O ROP não garante a qualidade, entrega ou condições comerciais de terceiros. Peça nota fiscal, confirme CNPJ, política de troca e faça um pedido-teste antes de comprometer capital.</p>
 </section>
 
@@ -255,7 +260,7 @@ function render(){
  const search=document.querySelector("#search").value.toLowerCase();
  const category=document.querySelector("#category").value;
  let filtered=items.map((x,i)=>({...x,i,margin:null}))
- .filter(x=>x.validatedOpportunity===true || x.market!==undefined)
+ .filter(x=>x.validatedOpportunity===true)
  .filter(x=>(x.name+" "+x.category+" "+x.source+" "+x.note).toLowerCase().includes(search)&&(!category||x.category===category));
  // Prices are research references, not comparable purchase/sale pairs, so don't filter as if
  // their margin were known. The user can use the calculator after entering an actual resale price.
