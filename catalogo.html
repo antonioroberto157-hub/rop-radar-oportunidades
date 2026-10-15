@@ -358,7 +358,8 @@ const items=[
 const money=n=>Number(n||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
 // Um preço sugerido pelo próprio fornecedor não valida preço de mercado nem lucro. A classificação só descreve o tipo de evidência disponível.
 const hasPublishedPair=x=>x.validatedOpportunity===true && Number(x.cost)>0 && Number(x.market)>0 && !!x.supplierUrl;
-const samePriceSource=x=>!!x.supplierUrl && !!x.marketUrl && x.supplierUrl.replace(/\\/$/,"")===x.marketUrl.replace(/\\/$/,"");
+const normalizeSourceUrl=u=>String(u||"").split("?")[0].replace(/\/+$/, "");
+const samePriceSource=x=>!!x.supplierUrl && !!x.marketUrl && normalizeSourceUrl(x.supplierUrl)===normalizeSourceUrl(x.marketUrl);
 const isValidated=x=>hasPublishedPair(x) && !samePriceSource(x);
 const confidence=x=>hasPublishedPair(x)&&samePriceSource(x)?{label:"CUSTO + SUGESTÃO",color:"#2d3b50",text:"#ffdf9c",detail:"O mesmo fornecedor informa custo e preço sugerido. Isso não comprova preço praticado no mercado, vendas reais ou lucro; trate como hipótese."}:isValidated(x)?{label:"FONTES SEPARADAS",color:"#174d37",text:"#a7f3d0",detail:"Há referências de custo e de varejo em fontes diferentes, mas ainda é necessário conferir SKU, data, frete, taxas e preço efetivamente praticado."}:Number(x.cost)>0?{label:"CUSTO INFORMADO",color:"#2d3b50",text:"#ffdf9c",detail:"Há uma referência de custo, mas falta preço de venda comparável ou confirmação das condições completas."}:{label:"EM INVESTIGAÇÃO",color:"#2d3b50",text:"#ffdf9c",detail:"O custo de compra comparável ainda não foi confirmado. Não é possível estimar lucro com confiança."};
 const safe=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
