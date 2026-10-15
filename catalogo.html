@@ -63,13 +63,13 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 <div class="notice"><b>Critério de entrada:</b> produto equivalente, custo de fornecedor confirmado, preço de venda observado e margem líquida positiva após taxas e frete. Não publicamos estimativas como oportunidades.</div>
 </header>
 <div class="stats">
-<div class="stat">Oportunidades confirmadas<strong id="count">0</strong></div>
+<div class="stat">Produtos com referência de mercado<strong id="count">0</strong></div>
 <div class="stat">Conta rápida<strong>Lucro estimado</strong></div>
 <div class="stat">Preços<strong>Confira no link</strong></div>
 </div>
 <div class="layout">
 <section class="panel">
-<h2>Oportunidades validadas</h2><p class="small">A lista só mostra produtos aprovados nos critérios de custo, equivalência e margem líquida. A pesquisa atual ainda não comprovou nenhum par completo de compra e venda com lucro líquido positivo; por isso, não vou inventar oportunidades.</p>
+<h2>Referências pesquisadas</h2><p class="small">Esta lista mostra somente produtos com preço de varejo observado ou oportunidade validada. Quando falta custo de fornecedor comparável, o item aparece como referência em pesquisa, nunca como lucro confirmado.</p>
 <div class="filters">
 <div><label for="search">Procurar produto</label><input id="search" placeholder="SSD, mouse, hub USB..."></div>
 <div><label for="category">Tipo de produto</label><select id="category"><option value="">Todos</option><option>Armazenamento</option><option>Periféricos</option><option>Rede e acessórios</option><option>Componentes</option><option>Acessórios</option><option>Casa e utilidades</option><option>Ferramentas</option><option>Pet</option><option>Celulares e acessórios</option><option>Áudio e vídeo</option><option>Energia e iluminação</option><option>Cozinha</option><option>Automotivo</option><option>Esporte e fitness</option><option>Moda e acessórios</option><option>Beleza e cuidados pessoais</option><option>Papelaria</option><option>Bebê e infantil</option><option>Viagem e organização</option></select></div>
@@ -255,7 +255,7 @@ function render(){
  const search=document.querySelector("#search").value.toLowerCase();
  const category=document.querySelector("#category").value;
  let filtered=items.map((x,i)=>({...x,i,margin:null}))
- .filter(x=>x.validatedOpportunity===true)
+ .filter(x=>x.validatedOpportunity===true || x.market!==undefined)
  .filter(x=>(x.name+" "+x.category+" "+x.source+" "+x.note).toLowerCase().includes(search)&&(!category||x.category===category));
  // Prices are research references, not comparable purchase/sale pairs, so don't filter as if
  // their margin were known. The user can use the calculator after entering an actual resale price.
