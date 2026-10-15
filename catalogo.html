@@ -59,17 +59,17 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 <header>
 <p style="color:var(--mint);font-weight:bold;letter-spacing:1px">PREÇOS E CONTAS, SEM COMPLICAÇÃO</p>
 <h1>Veja o preço.<br><span style="color:var(--mint)">Calcule quanto sobra.</span></h1>
-<p>Explore 26 ideias em informática, acessórios, casa, ferramentas e pet. Pesquise o preço real e calcule seus custos antes de comprar para revender.</p>
+<p>Explore 27 produtos em informática, acessórios, casa, ferramentas e pet. Pesquise o preço real e calcule seus custos antes de comprar para revender.</p>
 <div class="notice"><b>Como usar:</b> confira o preço, toque em “Calcular lucro” e informe por quanto pretende vender.</div>
 </header>
 <div class="stats">
-<div class="stat">Produtos<strong id="count">26</strong></div>
+<div class="stat">Produtos<strong id="count">27</strong></div>
 <div class="stat">Conta rápida<strong>Lucro estimado</strong></div>
 <div class="stat">Preços<strong>Confira no link</strong></div>
 </div>
 <div class="layout">
 <section class="panel">
-<h2>Escolha um produto</h2><p class="small">Preços consultados em 15/10/2026 quando indicado. O selo de oportunidade estima o líquido usando as taxas e o frete configurados ao lado; estoque, envio e condições podem mudar. Só compre após confirmar o anúncio.</p>
+<h2>Escolha um produto</h2><p class="small">A análise cobre todos os itens do catálogo. Só os produtos com dois preços comparáveis recebem cálculo de spread; os demais ficam marcados como pesquisa pendente, sem fingir que há oportunidade. Referências mudam por estoque, CEP, condição e vendedor.</p>
 <div class="filters">
 <div><label for="search">Procurar produto</label><input id="search" placeholder="SSD, mouse, hub USB..."></div>
 <div><label for="category">Tipo de produto</label><select id="category"><option value="">Todos</option><option>Armazenamento</option><option>Periféricos</option><option>Rede e acessórios</option><option>Componentes</option><option>Acessórios</option><option>Casa e utilidades</option><option>Ferramentas</option><option>Pet</option></select></div>
@@ -166,7 +166,7 @@ function render(){
  <p>${safe(x.note)}</p>
  <div class="price-line"><span class="small">Preço de compra observado/referência</span><strong>${money(x.cost)}</strong></div>
  ${x.market?`<div class="price-line"><span class="small">Referência de venda observada</span><strong>${money(x.market)}</strong></div><p class="small">Spread bruto: <b>${money(x.market-x.cost)}</b> · estimativa líquida com as premissas atuais: <b>${money(x.market-x.cost-x.market*(Math.min(100,Math.max(0,+document.querySelector("#fees").value||0))/100)-Math.max(0,+document.querySelector("#freight").value||0))}</b></p><p class="small"><b>${(x.market-x.cost-x.market*(Math.min(100,Math.max(0,+document.querySelector("#fees").value||0))/100)-Math.max(0,+document.querySelector("#freight").value||0))>=Math.max(20,x.market*.15)?"POTENCIAL":(x.market-x.cost-x.market*(Math.min(100,Math.max(0,+document.querySelector("#fees").value||0))/100)-Math.max(0,+document.querySelector("#freight").value||0))>0?"MARGEM APERTADA":"NÃO COMPENSA"}</b> com taxa de ${document.querySelector("#fees").value}% e custo/frete de ${money(+document.querySelector("#freight").value||0)}. <a href="${x.marketUrl||x.url}" target="_blank" rel="noopener">Conferir anúncio ↗</a></p>`:""}
- <p class="small">${safe(x.source)}</p>
+ <p class="small">${safe(x.source)}</p>${!x.market?`<p class="small" style="border:1px solid #66532c;background:#292719;color:#f7e3ad;padding:9px;border-radius:8px"><b>SEM OPORTUNIDADE VALIDADA:</b> custo abaixo é apenas referência para pesquisa. Ainda falta confirmar uma oferta de compra e um anúncio comparável de venda para este modelo.</p>`:""}
  <div class="product-actions">
  <a class="btn secondary" href="${x.url}" target="_blank" rel="noopener">Ver preço ↗</a>
  <button data-calc="${x.i}">Calcular lucro</button>
