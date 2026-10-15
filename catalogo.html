@@ -71,10 +71,7 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 <div class="layout">
 <section class="panel">
 <h2>Radar de produtos</h2>
-<div class="notice" id="top3-highlight">
- <b>⭐ Para ficar de olho</b>
- <p class="small">Destaques pela sobra teórica com preço sugerido do fornecedor, taxa de 8% e R$ 10 por unidade para frete/outros custos. Confirme todos os custos antes de comprar.</p>
- <div id="top3-products"></div>
+
 </div><p class="small">A vitrine inclui produtos com custo atacadista e preço de varejo sugerido publicados pelo próprio fornecedor. Isso valida a referência comercial do fornecedor, não garante que o preço será praticado no mercado. A sobra é estimada e deve ser confirmada com frete, taxas e outros custos.</p>
 <div class="filters">
 <div><label for="search">Procurar produto</label><input id="search" placeholder="SSD, mouse, hub USB..."></div>
@@ -337,29 +334,6 @@ function calculate(){
  document.querySelector("#roi").textContent=roi.toLocaleString("pt-BR",{maximumFractionDigits:1})+"%";
  document.querySelector("#summary").textContent="Margem sobre venda: "+margin.toLocaleString("pt-BR",{maximumFractionDigits:1})+"%. Estimativa antes de custos não informados.";
 }
-function renderTop3(){
- const picks=[
-  {id:"aparelho-tv-uni",label:"Maior sobra teórica",reason:"Maior diferença estimada entre custo e preço sugerido; confirmar modelo, garantia e preço praticado."},
-  {id:"panela-pressao-10l",label:"Sobra alta",reason:"Preço sugerido deixa uma diferença teórica interessante; validar frete, segurança e procura."},
-  {id:"panela-pressao-5l-antiaderente",label:"Alternativa de cozinha",reason:"Diferença teórica relevante; conferir concorrência, frete e garantia."}
- ];
- const host=document.querySelector("#top3-products");
- host.innerHTML=picks.map(p=>{
-  const x=items.find(i=>i.id===p.id);
-  if(!x) return "";
-  const fee=Math.min(100,Math.max(0,+document.querySelector("#fees").value||0))/100;
-  const freight=Math.max(0,+document.querySelector("#freight").value||0);
-  const profit=Number(x.market||x.sell||0)-Number(x.cost||0)-Number(x.market||x.sell||0)*fee-freight;
-  return `<article class="product"><div class="product-body"><span class="tag">${safe(p.label)}</span><h3>${safe(x.name)}</h3><p>${safe(p.reason)}</p><div class="price-line"><span class="small">Custo atacadista publicado</span><strong>${money(x.cost)}</strong></div><div class="price-line"><span class="small">Preço sugerido fornecedor</span><strong>${money(x.market||x.sell)}</strong></div><p class="small">Sobra teórica: <b>${money(profit)}</b> por unidade, com taxa atual de ${(fee*100).toLocaleString("pt-BR")}% e provisão de ${money(freight)} para frete/outros custos. Não é lucro confirmado.</p><p class="small">${safe(x.source)}</p><div class="product-actions"><a class="btn secondary" href="${x.url}" target="_blank" rel="noopener">Ver fornecedor ↗</a><button data-topcalc="${p.id}">Calcular</button></div></div></article>`;
- }).join("");
- document.querySelectorAll("[data-topcalc]").forEach(btn=>btn.addEventListener("click",()=>{
-  const x=items.find(i=>i.id===btn.dataset.topcalc);
-  document.querySelector("#buy").value=x.cost;
-  document.querySelector("#sell").value=x.market||x.sell||0;
-  calculate();
-  document.querySelector("#sell").focus();
- }));
-}
 function render(){
  const search=document.querySelector("#search").value.toLowerCase();
  const category=document.querySelector("#category").value;
@@ -368,14 +342,15 @@ function render(){
  .filter(x=>(x.name+" "+x.category+" "+x.source+" "+x.note).toLowerCase().includes(search)&&(!category||x.category===category));
  // Prices are research references, not comparable purchase/sale pairs, so don't filter as if
  // their margin were known. The user can use the calculator after entering an actual resale price.
- filtered.sort((a,b)=>a.name.localeCompare(b.name));
+ const featuredIds=["aparelho-tv-uni","panela-pressao-10l","panela-pressao-5l-antiaderente"];
+ filtered.sort((a,b)=>Number(featuredIds.includes(b.id))-Number(featuredIds.includes(a.id)) || a.name.localeCompare(b.name));
  document.querySelector("#count").textContent=filtered.length;
  document.querySelector("#products").innerHTML=filtered.length?filtered.map(x=>`
  <article class="product">
  <img class="product-photo" src="${x.image}" alt="${safe(x.alt)}" loading="lazy">
  <div class="product-body">
  <span class="tag">${safe(x.category)}</span> <span class="tag" style="background:${isValidated(x)?"#174d37":"#4b3a1b"};color:${isValidated(x)?"#a7f3d0":"#ffdf9c"}">${isValidated(x)?"VALIDADA PELO FORNECEDOR":"FORA DA VITRINE"}</span>
- <h3>${safe(x.name)}</h3>
+ <h3>${featuredIds.includes(x.id)?"⭐ ":""}${safe(x.name)}</h3>
  <p>${safe(x.note)}</p>
  <div class="price-line"><span class="small">Custo de compra confirmado</span><strong>${x.cost===null?"Não pesquisado":money(x.cost)}</strong></div>
  ${x.market?`<div class="price-line"><span class="small">Preço de varejo observado</span><strong>${money(x.market)}</strong></div>${x.cost===null?`<p class="small">Sem margem calculada: falta custo de compra real comparável. <a href="${x.marketUrl||x.url}" target="_blank" rel="noopener">Conferir referência ↗</a></p>`:`<p class="small">Spread bruto: <b>${money(x.market-x.cost)}</b> · líquido estimado com taxas e custos informados: <b>${money(x.market-x.cost-x.market*(Math.min(100,Math.max(0,+document.querySelector("#fees").value||0))/100)-Math.max(0,+document.querySelector("#freight").value||0))}</b></p><p class="small"><b>${(x.market-x.cost-x.market*(Math.min(100,Math.max(0,+document.querySelector("#fees").value||0))/100)-Math.max(0,+document.querySelector("#freight").value||0))>=Math.max(20,x.market*.15)?"POTENCIAL":(x.market-x.cost-x.market*(Math.min(100,Math.max(0,+document.querySelector("#fees").value||0))/100)-Math.max(0,+document.querySelector("#freight").value||0))>0?"MARGEM APERTADA":"NÃO COMPENSA"}</b>. <a href="${x.marketUrl||x.url}" target="_blank" rel="noopener">Conferir anúncio ↗</a></p>`}`:""}
