@@ -1,15 +1,154 @@
-<!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#07111f"><title>Catálogo preliminar | ROP</title>
-<style>:root{--bg:#050b14;--panel:#0b1525;--line:#1c2b40;--text:#f1f5fa;--muted:#9aabc0;--mint:#77e0b4;--warn:#ffd18a}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 85% 0%,#10213a 0,transparent 42%),var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}.wrap{width:min(1040px,92%);margin:auto}a{color:var(--mint)}header{padding:23px 0;border-bottom:1px solid #182437}.nav{display:flex;justify-content:space-between;align-items:center;gap:14px}.brand{font-weight:800;text-decoration:none;color:var(--text)}.mark{display:inline-grid;place-items:center;background:var(--mint);color:#062017;border-radius:8px;width:34px;height:34px;margin-right:8px;font-size:12px}.hero{padding:45px 0 25px}.eyebrow{color:var(--mint);font-size:11px;letter-spacing:.14em;font-weight:800;text-transform:uppercase}.hero h1{font-size:clamp(32px,5vw,48px);letter-spacing:-.04em;line-height:1.1;margin:12px 0}.sub,.muted{color:var(--muted)}.notice{border:1px solid #4c3c22;color:#f1d8ad;background:#211a10;padding:13px 15px;border-radius:10px;margin:20px 0 26px;font-size:13px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px;margin:20px 0 55px}.card{background:#091321;border:1px solid var(--line);border-radius:15px;padding:20px}.tag{display:inline-block;border:1px solid #245242;background:#0d2a25;color:var(--mint);border-radius:20px;padding:3px 8px;font-size:11px}.card h2{font-size:20px;margin:12px 0 5px}.desc{color:var(--muted);font-size:14px;margin:0 0 17px}.fieldgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.field input{width:100%;border:1px solid #304057;border-radius:8px;background:#050b14;color:var(--text);padding:11px;font-size:16px}.result{margin-top:15px;padding:15px;border:1px solid #284234;background:#0a1e1a;border-radius:10px}.result .label{font-size:12px;color:#a6c4b7}.profit{font-size:26px;font-weight:800;color:var(--mint)}.negative{color:#ff9b9b}.links{display:flex;gap:12px;flex-wrap:wrap;margin-top:15px;font-size:13px}.links a{color:var(--mint)}.small{font-size:12px;color:#8495aa;margin-top:14px}footer{border-top:1px solid #182437;padding:24px 0 36px;color:#8495aa;font-size:12px}@media(max-width:650px){.grid{grid-template-columns:1fr}.fieldgrid{gap:9px}.card{padding:16px}.hero{padding-top:34px}}</style></head>
-<body><header><div class="wrap nav"><a class="brand" href="index.html"><span class="mark">ROP</span>Radar de Oportunidades</a><a href="index.html">← Voltar ao início</a></div></header><main class="wrap"><section class="hero"><div class="eyebrow">Ferramenta de validação</div><h1>Catálogo preliminar</h1><p class="sub">Ajuste os valores para simular a margem de uma possível revenda. Os campos não representam preço ao vivo nem oportunidade confirmada.</p><div class="notice"><strong>Importante:</strong> taxas, frete, impostos, garantia e preço efetivo de venda variam. Confira tudo na plataforma antes de comprar. Os valores iniciais abaixo são apenas um cenário de teste.</div></section>
-<div class="grid">
-<article class="card"><span class="tag">Cenário editável</span><h2>SSD Kingston NV3 — 1 TB</h2><p class="desc">Compare somente o modelo exato, a garantia e o vendedor. Não trate listagens importadas como equivalentes automaticamente.</p><div class="fieldgrid"><div class="field"><label for="buy1">Custo de compra (R$)</label><input id="buy1" type="number" min="0" step="0.01" value="999"></div><div class="field"><label for="sell1">Preço de venda (R$)</label><input id="sell1" type="number" min="0" step="0.01" value="1150"></div><div class="field"><label for="fee1">Taxas (%)</label><input id="fee1" type="number" min="0" max="100" step="0.1" value="14"></div><div class="field"><label for="cost1">Outros custos (R$)</label><input id="cost1" type="number" min="0" step="0.01" value="20"></div></div><div class="result"><div class="label">Lucro estimado nesta simulação</div><div id="profit1" class="profit">R$ -30,00</div><div id="margin1" class="label">Margem estimada: -2,6%</div></div><div class="links"><a href="https://lista.mercadolivre.com.br/ssd-nv3-kingston-1tb" target="_blank" rel="noopener">Pesquisar no Mercado Livre ↗</a><a href="https://www.kabum.com.br/" target="_blank" rel="noopener">Pesquisar na KaBuM ↗</a><a href="https://www.buscape.com.br/" target="_blank" rel="noopener">Comparar no Buscapé ↗</a></div><p class="small">O cálculo desconta taxa percentual sobre o preço de venda, custo de compra e outros custos informados. Não inclui automaticamente todos os custos possíveis.</p></article>
-<article class="card"><span class="tag">Pesquisa pendente</span><h2>Mouse Logitech G102</h2><p class="desc">Verifique a versão exata, originalidade, garantia e custo total de entrega antes de comparar ofertas.</p><div class="fieldgrid"><div class="field"><label for="buy2">Custo de compra (R$)</label><input id="buy2" type="number" min="0" step="0.01" placeholder="Informe"></div><div class="field"><label for="sell2">Preço de venda (R$)</label><input id="sell2" type="number" min="0" step="0.01" placeholder="Informe"></div><div class="field"><label for="fee2">Taxas (%)</label><input id="fee2" type="number" min="0" max="100" step="0.1" value="14"></div><div class="field"><label for="cost2">Outros custos (R$)</label><input id="cost2" type="number" min="0" step="0.01" value="20"></div></div><div class="result"><div class="label">Lucro estimado</div><div id="profit2" class="profit">Preencha os valores</div><div id="margin2" class="label">Sem cotação validada</div></div><div class="links"><a href="https://www.mercadolivre.com.br/" target="_blank" rel="noopener">Pesquisar no Mercado Livre ↗</a><a href="https://www.buscape.com.br/" target="_blank" rel="noopener">Comparar no Buscapé ↗</a></div></article>
-<article class="card"><span class="tag">Pesquisa pendente</span><h2>Adaptador Wi‑Fi USB</h2><p class="desc">Modelos diferentes podem ter padrões Wi‑Fi, antenas, velocidades e compatibilidade diferentes. Compare especificações idênticas.</p><div class="fieldgrid"><div class="field"><label for="buy3">Custo de compra (R$)</label><input id="buy3" type="number" min="0" step="0.01" placeholder="Informe"></div><div class="field"><label for="sell3">Preço de venda (R$)</label><input id="sell3" type="number" min="0" step="0.01" placeholder="Informe"></div><div class="field"><label for="fee3">Taxas (%)</label><input id="fee3" type="number" min="0" max="100" step="0.1" value="14"></div><div class="field"><label for="cost3">Outros custos (R$)</label><input id="cost3" type="number" min="0" step="0.01" value="20"></div></div><div class="result"><div class="label">Lucro estimado</div><div id="profit3" class="profit">Preencha os valores</div><div id="margin3" class="label">Sem cotação validada</div></div><div class="links"><a href="https://www.mercadolivre.com.br/" target="_blank" rel="noopener">Pesquisar no Mercado Livre ↗</a><a href="https://www.buscape.com.br/" target="_blank" rel="noopener">Comparar no Buscapé ↗</a></div></article>
-<article class="card"><h2>Como interpretar</h2><p class="desc">Uma simulação positiva não comprova que o produto vai vender. Antes de comprar, confira preços recentes, vendas realizadas quando disponíveis, reputação do vendedor, devoluções, frete e impostos.</p><p class="small">O ROP ainda não consulta preços automaticamente; os links levam a pesquisas externas e os valores devem ser preenchidos/verificados manualmente.</p></article>
-</div></main><footer><div class="wrap">© ROP — Radar de Oportunidades · Ferramenta preliminar para simulação, não recomendação de compra.</div></footer>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catálogo de oportunidades | ROP</title>
+<style>
+:root{--bg:#09111f;--panel:#111e32;--line:#2b405d;--muted:#a9b9d0;--mint:#8ee6c2;--gold:#f5d48a}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 90% 0%,#1b3150,transparent 38%),var(--bg);color:#f2f6ff;font:16px/1.55 system-ui,sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:20px}
+nav{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 0;border-bottom:1px solid #ffffff20;font-weight:bold}
+.logo{background:linear-gradient(145deg,#a5f3d1,#55c99b);color:#08241a;padding:8px 12px;border-radius:10px}
+a{color:var(--mint);text-decoration:none}
+h1{font-size:clamp(30px,5vw,44px);line-height:1.1}
+p{color:var(--muted)}
+.panel,.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;margin:15px 0}
+.notice{background:#292719;color:#f7e3ad;padding:14px;border-radius:12px;border:1px solid #66532c}
+.layout{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+.filters,.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label{display:block;color:var(--muted);font-size:13px;margin-bottom:5px}
+input,select{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;background:#091525;color:white;font:inherit}
+button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;background:var(--mint);color:#092017;font-weight:bold;cursor:pointer}
+.secondary{background:#24364f;color:white;border:1px solid var(--line)}
+.product{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0}
+.tag{font-size:11px;color:var(--gold);background:#2d3b50;border-radius:20px;padding:4px 8px}
+.small{font-size:12px}
+.result{background:#102d2a;border:1px solid #357c68;border-radius:12px;padding:14px;margin-top:15px}
+.result strong{font-size:25px;color:var(--mint)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+.stat{background:#0c192b;border:1px solid var(--line);padding:12px;border-radius:12px}
+.stat strong{display:block;font-size:20px}
+@media(max-width:700px){.layout{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}}
+@media(max-width:420px){.filters,.fields{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><div><span class="logo">ROP</span> Radar de Oportunidades</div><a href="index.html">Página inicial ↗</a></nav>
+<header>
+<p style="color:var(--mint);font-weight:bold;letter-spacing:1px">PESQUISA DE REVENDA, SEM ACHISMO</p>
+<h1>Compare custos.<br><span style="color:var(--mint)">Estime sua margem.</span></h1>
+<p>Pesquise produtos, confira preços atuais e calcule se a revenda faz sentido.</p>
+<div class="notice"><b>Importante:</b> os preços abaixo são exemplos para simulação, não ofertas verificadas em tempo real.</div>
+</header>
+<div class="stats">
+<div class="stat">Produtos no catálogo<strong id="count">6</strong></div>
+<div class="stat">Filtro de margem<strong>Personalizável</strong></div>
+<div class="stat">Preços<strong>Simulados</strong></div>
+</div>
+<div class="layout">
+<section class="panel">
+<h2>Catálogo preliminar</h2>
+<div class="filters">
+<div><label for="search">Buscar produto</label><input id="search" placeholder="SSD, mouse, teclado..."></div>
+<div><label for="category">Categoria</label><select id="category"><option value="">Todas</option><option>Armazenamento</option><option>Periféricos</option><option>Rede e acessórios</option><option>Componentes</option></select></div>
+<div><label for="minmargin">Margem mínima</label><select id="minmargin"><option value="-100">Qualquer</option><option value="0">Acima de 0%</option><option value="10">10% ou mais</option><option value="20">20% ou mais</option><option value="30">30% ou mais</option></select></div>
+<div><label for="sort">Ordenar</label><select id="sort"><option value="name">Nome</option><option value="margin">Maior margem simulada</option></select></div>
+</div>
+<div id="products"></div>
+</section>
+<aside class="panel">
+<h2>Calculadora de revenda</h2>
+<p class="small">Preencha os valores para estimar o lucro líquido.</p>
+<div class="fields">
+<div><label for="buy">Custo de compra (R$)</label><input id="buy" type="number" min="0" value="100"></div>
+<div><label for="sell">Preço de venda (R$)</label><input id="sell" type="number" min="0" value="150"></div>
+<div><label for="freight">Frete por unidade (R$)</label><input id="freight" type="number" min="0" value="10"></div>
+<div><label for="fees">Taxas (%)</label><input id="fees" type="number" min="0" max="100" value="12"></div>
+<div><label for="extra">Outros custos (R$)</label><input id="extra" type="number" min="0" value="0"></div>
+<div><label for="quantity">Quantidade</label><input id="quantity" type="number" min="1" value="1"></div>
+</div>
+<div class="result">Lucro líquido por unidade<strong id="profit" style="display:block">R$ 22,00</strong><p id="summary">Margem sobre venda: 14,7%</p></div>
+<div class="stats">
+<div class="stat">Lucro total<strong id="total">R$ 22,00</strong></div>
+<div class="stat">Margem<strong id="margin">14,7%</strong></div>
+<div class="stat">Retorno sobre custo<strong id="roi">20,0%</strong></div>
+</div>
+<button id="clear" class="secondary">Limpar valores</button>
+<p class="small">Inclua impostos, devoluções e custos operacionais quando aplicáveis. Valores são estimativas.</p>
+</aside>
+</div>
+<footer><p>ROP — Radar de Oportunidades. Confirme preços, disponibilidade e procura antes de comprar.</p></footer>
+</div>
 <script>
-const money = n => n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-function recalc(n){const b=document.getElementById('buy'+n),s=document.getElementById('sell'+n),f=document.getElementById('fee'+n),c=document.getElementById('cost'+n),p=document.getElementById('profit'+n),m=document.getElementById('margin'+n);const vals=[b.value,s.value,f.value,c.value];if(!b.value||!s.value||b.value===''||s.value===''){p.textContent='Preencha os valores';p.classList.remove('negative');m.textContent='Sem cotação validada';return;}const buy=Number(b.value),sell=Number(s.value),fee=Number(f.value||0),cost=Number(c.value||0);const profit=sell*(1-fee/100)-buy-cost;const margin=sell>0?profit/sell*100:0;p.textContent=money(profit);p.classList.toggle('negative',profit<0);m.textContent='Margem estimada sobre a venda: '+margin.toLocaleString('pt-BR',{maximumFractionDigits:2})+'%';}
-[1,2,3].forEach(n=>['buy','sell','fee','cost'].forEach(id=>document.getElementById(id+n).addEventListener('input',()=>recalc(n))));[1,2,3].forEach(recalc);
-</script></body></html>
+const items=[
+{name:"SSD Kingston NV3 — 1 TB",category:"Armazenamento",cost:330,sell:420,desc:"Armazenamento para sistema, programas e arquivos.",q:"SSD Kingston NV3 1TB preço"},
+{name:"Mouse Logitech G102",category:"Periféricos",cost:110,sell:150,desc:"Mouse com fio para tarefas diárias e jogos.",q:"Mouse Logitech G102 preço"},
+{name:"Adaptador Wi-Fi USB",category:"Rede e acessórios",cost:35,sell:55,desc:"Conectividade sem fio para computadores compatíveis.",q:"adaptador wifi USB preço"},
+{name:"Teclado mecânico de entrada",category:"Periféricos",cost:150,sell:220,desc:"Opção de entrada para trabalho e jogos.",q:"teclado mecânico entrada preço"},
+{name:"Memória RAM DDR4 16 GB",category:"Componentes",cost:160,sell:230,desc:"Componente para upgrades compatíveis.",q:"memória RAM DDR4 16GB preço"},
+{name:"Hub USB 4 portas",category:"Rede e acessórios",cost:30,sell:50,desc:"Expande portas USB para escritório e casa.",q:"hub USB 4 portas preço"}
+];
+const money=n=>Number(n||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+function calculate(){
+const buy=+document.querySelector("#buy").value||0;
+const sell=+document.querySelector("#sell").value||0;
+const freight=+document.querySelector("#freight").value||0;
+const fees=(+document.querySelector("#fees").value||0)/100;
+const extra=+document.querySelector("#extra").value||0;
+const qty=Math.max(1,+document.querySelector("#quantity").value||1);
+const profit=sell-buy-freight-sell*fees-extra;
+const base=buy+freight+extra;
+const margin=sell?profit/sell*100:0;
+const roi=base?profit/base*100:0;
+document.querySelector("#profit").textContent=money(profit);
+document.querySelector("#profit").style.color=profit<0?"#ff9999":"var(--mint)";
+document.querySelector("#total").textContent=money(profit*qty);
+document.querySelector("#margin").textContent=margin.toLocaleString("pt-BR",{maximumFractionDigits:1})+"%";
+document.querySelector("#roi").textContent=roi.toLocaleString("pt-BR",{maximumFractionDigits:1})+"%";
+document.querySelector("#summary").textContent="Margem sobre venda: "+margin.toLocaleString("pt-BR",{maximumFractionDigits:1})+"%. Taxas calculadas sobre o preço de venda.";
+}
+function render(){
+const search=document.querySelector("#search").value.toLowerCase();
+const category=document.querySelector("#category").value;
+const min=+document.querySelector("#minmargin").value;
+const sort=document.querySelector("#sort").value;
+let filtered=items.map((x,i)=>({...x,i,margin:(x.sell-x.cost-x.sell*.12)/x.sell*100}))
+.filter(x=>(x.name+" "+x.desc).toLowerCase().includes(search)&&(!category||x.category===category)&&x.margin>=min);
+if(sort==="margin")filtered.sort((a,b)=>b.margin-a.margin);
+else filtered.sort((a,b)=>a.name.localeCompare(b.name));
+document.querySelector("#count").textContent=filtered.length;
+document.querySelector("#products").innerHTML=filtered.length?filtered.map(x=>`
+<article class="product">
+<span class="tag">${x.category}</span> <span class="tag">Exemplo</span>
+<h3>${x.name}</h3><p>${x.desc}</p>
+<p class="small">Compra simulada: ${money(x.cost)} · Venda simulada: ${money(x.sell)}</p>
+<button data-calc="${x.i}">Calcular margem</button>
+<a class="btn secondary" target="_blank" rel="noopener" href="https://www.google.com/search?q=${encodeURIComponent(x.q)}">Pesquisar preço ↗</a>
+</article>`).join(""):"<p>Nenhum produto encontrado com esses filtros.</p>";
+document.querySelectorAll("[data-calc]").forEach(btn=>btn.addEventListener("click",()=>{
+const x=items[+btn.dataset.calc];
+document.querySelector("#buy").value=x.cost;
+document.querySelector("#sell").value=x.sell;
+calculate();
+document.querySelector("#buy").scrollIntoView({behavior:"smooth",block:"center"});
+}));
+}
+["buy","sell","freight","fees","extra","quantity"].forEach(id=>document.querySelector("#"+id).addEventListener("input",calculate));
+["search","category","minmargin","sort"].forEach(id=>document.querySelector("#"+id).addEventListener(id==="search"?"input":"change",render));
+document.querySelector("#clear").addEventListener("click",()=>{
+document.querySelector("#buy").value=0;
+document.querySelector("#sell").value=0;
+document.querySelector("#freight").value=0;
+document.querySelector("#fees").value=0;
+document.querySelector("#extra").value=0;
+document.querySelector("#quantity").value=1;
+calculate();
+});
+render();calculate();
+</script>
+</body>
+                                                   </html>
