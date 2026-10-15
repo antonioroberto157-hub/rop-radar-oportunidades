@@ -59,7 +59,7 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 <header>
 <p style="color:var(--mint);font-weight:bold;letter-spacing:1px">PREÇOS E CONTAS, SEM COMPLICAÇÃO</p>
 <h1>Veja o preço.<br><span style="color:var(--mint)">Calcule quanto sobra.</span></h1>
-<p>Veja somente oportunidades com custo de compra e preço de venda comparáveis, depois de taxas e despesas. Itens sem comprovação não entram na lista.</p>
+<p>Pesquisamos preços de varejo, atacadistas e pistas de fornecimento. O catálogo separa referências em análise de oportunidades validadas: preço anunciado não é venda garantida e margem só aparece quando o produto e os custos são comparáveis.</p>
 <div class="notice"><b>Critério de entrada:</b> produto equivalente, custo de fornecedor confirmado, preço de venda observado e margem líquida positiva após taxas e frete. Não publicamos estimativas como oportunidades.</div>
 </header>
 <div class="stats">
@@ -69,7 +69,7 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 </div>
 <div class="layout">
 <section class="panel">
-<h2>Referências pesquisadas</h2><p class="small">Esta lista mostra somente produtos com preço de varejo observado ou oportunidade validada. Quando falta custo de fornecedor comparável, o item aparece como referência em pesquisa, nunca como lucro confirmado.</p>
+<h2>Produtos e referências em pesquisa</h2><p class="small">Os itens abaixo são pistas para investigar, não recomendações automáticas de compra. Preço de varejo observado não confirma venda realizada. Produtos sem SKU/quantidade equivalentes ficam em análise, sem margem calculada.</p>
 <div class="filters">
 <div><label for="search">Procurar produto</label><input id="search" placeholder="SSD, mouse, hub USB..."></div>
 <div><label for="category">Tipo de produto</label><select id="category"><option value="">Todos</option><option>Armazenamento</option><option>Periféricos</option><option>Rede e acessórios</option><option>Componentes</option><option>Acessórios</option><option>Casa e utilidades</option><option>Ferramentas</option><option>Pet</option><option>Celulares e acessórios</option><option>Áudio e vídeo</option><option>Energia e iluminação</option><option>Cozinha</option><option>Automotivo</option><option>Esporte e fitness</option><option>Moda e acessórios</option><option>Beleza e cuidados pessoais</option><option>Papelaria</option><option>Bebê e infantil</option><option>Viagem e organização</option><option>Brinquedos</option><option>Decoração</option><option>Higiene e limpeza</option><option>Camping e lazer</option><option>Jardinagem</option><option>Automação e segurança</option><option>Agro e ferramentas</option><option>Material de construção</option><option>Instrumentos musicais</option><option>Produtos para pequenos negócios</option></select></div>
@@ -135,6 +135,7 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 </div>
 <script>
 const items=[
+{id:"brinquedo-frango-pet",name:"Brinquedo sonoro para pet — pista de fornecimento",category:"Pet",cost:null,market:15.79,sell:0,source:"Varejo observado: brinquedo sonoro tipo frango por R$ 15,79 no Mercado Livre. Referência de atacado: brinquedo sonoro tipo frango por R$ 4,99 no Atacado São Paulo; tamanho, marca e SKU não confirmados como iguais.",image:"https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=900&q=85",alt:"Brinquedo para cachorro — imagem ilustrativa",url:"https://lista.mercadolivre.com.br/galinha-frango-brinquedo-borracha-pet-mordedor-sonoro-apito",marketUrl:"https://produto.mercadolivre.com.br/MLB-2161354590-galinha-frango-brinquedo-borracha-pet-mordedor-sonoro-apito-_JM",supplierUrl:"https://www.atacadosaopaulo.com.br/utilidades/esporte-e-lazer/pet-shop",note:"PISTA EM ANÁLISE, NÃO OPORTUNIDADE VALIDADA: a diferença bruta teórica seria R$ 10,80, mas os anúncios não comprovam que seja o mesmo tamanho/modelo. Não calcule lucro nem compre antes de confirmar SKU, frete, taxas e preço efetivo de venda."},
 {id:"ssd",name:"SSD Kingston NV3 — 1 TB",category:"Armazenamento",cost:1075.90,sell:0,market:1049,source:"Compra observada: OFFERA/Shopee, R$ 1.075,90; anúncio atual do Mercado Livre a partir de R$ 1.049 (15/10/2026)",image:"https://media.kingston.com/kingston/product/SNV3S_1000GB-tn.png",alt:"SSD Kingston NV3 1 TB, modelo SNV3S/1000G",url:"https://offera.ai/commerce/p/30529998-ssd-m-2-nvme-1tb-kingston-nv3-snv3s-1000g",marketUrl:"https://lista.mercadolivre.com.br/ssd-kingston-nv3%2C-1tb%2C-m.2-2280",note:"A referência de venda está abaixo da compra pesquisada: não comprar para revender nesses preços. Confira condição, frete e vendedor."},
 {id:"ssd-sata",name:"SSD SATA — 480/500 GB",category:"Armazenamento",cost:190,sell:0,source:"Valor indicativo para pesquisa — confirme a oferta",image:"https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=900&q=85",alt:"SSD para computador",url:"https://www.google.com/search?q="+encodeURIComponent("SSD SATA 480GB 500GB preço Brasil"),note:"Compare capacidade, marca e garantia."},
 {id:"ssd-512",name:"SSD NVMe — 500/512 GB",category:"Armazenamento",cost:230,sell:0,source:"Valor indicativo para pesquisa — confirme a oferta",image:"https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=900&q=85",alt:"SSD NVMe",url:"https://www.google.com/search?q="+encodeURIComponent("SSD NVMe 500GB 512GB preço Brasil"),note:"Confira se a placa-mãe aceita NVMe."},
@@ -260,7 +261,7 @@ function render(){
  const search=document.querySelector("#search").value.toLowerCase();
  const category=document.querySelector("#category").value;
  let filtered=items.map((x,i)=>({...x,i,margin:null}))
- .filter(x=>x.validatedOpportunity===true)
+ .filter(x=>x.validatedOpportunity===true || (x.market!==undefined && x.cost===null))
  .filter(x=>(x.name+" "+x.category+" "+x.source+" "+x.note).toLowerCase().includes(search)&&(!category||x.category===category));
  // Prices are research references, not comparable purchase/sale pairs, so don't filter as if
  // their margin were known. The user can use the calculator after entering an actual resale price.
@@ -280,7 +281,7 @@ function render(){
  <a class="btn secondary" href="${x.url}" target="_blank" rel="noopener">Ver preço ↗</a>
  <button data-calc="${x.i}">Calcular lucro</button>
  </div></div>
- </article>`).join("") : "<div class=\"notice\"><b>Nenhuma oportunidade confirmada no momento.</b><p>As comparações atuais não demonstram lucro líquido positivo com preços equivalentes e custos completos. O catálogo de pesquisa foi ocultado para não apresentar produtos sem validação como oportunidades.</p></div>";
+ </article>`).join("") : "<div class=\"notice\"><b>Nenhuma referência para estes filtros.</b><p>As comparações atuais não demonstram lucro líquido positivo com preços equivalentes e custos completos. Tente outra categoria ou remova o termo da busca. Itens em análise não são apresentados como lucro confirmado.</p></div>";
  document.querySelectorAll(".product-photo").forEach(img=>img.addEventListener("error",()=>{img.style.display="none";}));
  document.querySelectorAll("[data-calc]").forEach(btn=>btn.addEventListener("click",()=>{
   const x=items[+btn.dataset.calc];
