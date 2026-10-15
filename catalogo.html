@@ -49,6 +49,9 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 .stat strong{display:block;font-size:20px}
 @media(max-width:700px){.layout{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}}
 @media(max-width:420px){.filters,.fields{grid-template-columns:1fr}}
+
+/* Layout simplificado: menos avisos visíveis, detalhes sob demanda */
+.intro{padding:22px 0 8px}.intro .eyebrow{color:var(--mint);font-size:12px;font-weight:800;letter-spacing:1.5px;margin:0}.intro h1{font-size:clamp(28px,4.5vw,40px);margin:10px 0}.intro h1 span{color:var(--mint)}.intro>p:last-child{margin:0 0 8px}.catalog-count{font-size:13px;color:var(--muted);margin:8px 0 12px}.catalog-panel{margin-top:0}.section-heading{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}.section-heading h2{margin:0 0 14px}.product-note{font-size:13px;line-height:1.45;color:#c2d4ec;margin:8px 0}.product-details{border-top:1px solid #164879;margin-top:12px;padding-top:8px}.product-details summary{font-size:12px;color:#8ccfff;cursor:pointer}.product-details p{margin:8px 0}.product .price-line{margin:7px 0}.product .price-line strong{font-size:20px}.product-actions{margin-top:10px}.product-actions .btn,.product-actions button{padding:10px;font-size:13px}
 </style>
 </head>
 <body>
@@ -56,23 +59,16 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 <nav><a class="brand" href="index.html" aria-label="ROP — Página inicial">
 <svg class="logo-icon" viewBox="0 0 64 64" role="img" aria-label="Logo ROP"><rect x="2" y="2" width="60" height="60" rx="16" fill="#8ee6c2"/><path d="M16 45V18h15c9 0 14 4 14 12 0 6-3 10-9 12l10 8H34l-9-8h-1v8H16zm8-17v7h7c4 0 6-1 6-4s-2-3-6-3h-7z" fill="#08241a"/><circle cx="48" cy="17" r="5" fill="#08241a"/></svg>
 <span class="logo-type"><strong style="color:#31b2ff">ROP</strong><span>Radar de Oportunidades</span></span></a><a href="index.html">Página inicial ↗</a></nav>
-<header>
-<p style="color:var(--mint);font-weight:bold;letter-spacing:1px">PREÇOS E CONTAS, SEM COMPLICAÇÃO</p>
-<h1>Veja o preço.<br><span style="color:var(--mint)">Calcule quanto sobra.</span></h1>
-<p>A vitrine mostra somente oportunidades comprovadas: custo de compra verificável, preço de venda independente para o mesmo produto e lucro líquido positivo após os custos. Pistas e preços sugeridos por fornecedores ficam fora.</p>
-<div class="notice"><b>Critério de entrada:</b> produto equivalente, custo de fornecedor confirmado, preço de venda observado e margem líquida positiva após taxas e frete. Não publicamos estimativas como oportunidades.</div>
+<header class="intro">
+<p class="eyebrow">ROP · RADAR DE OPORTUNIDADES</p>
+<h1>Encontre. Compare. <span>Calcule.</span></h1>
+<p>Produtos e referências de compra para você analisar antes de revender.</p>
 </header>
-<div class="stats">
-<div class="stat">Produtos com referência de mercado<strong id="count">0</strong></div>
-<div class="stat">Conta rápida<strong>Lucro estimado</strong></div>
-<div class="stat">Preços<strong>Confira no link</strong></div>
-</div>
+<div class="catalog-count"><strong id="count">0</strong> produtos nesta seleção</div>
 
 <div class="layout">
-<section class="panel">
-<h2>Radar de produtos</h2>
-
-</div><p class="small">A vitrine inclui produtos com custo atacadista e preço de varejo sugerido publicados pelo próprio fornecedor. Isso valida a referência comercial do fornecedor, não garante que o preço será praticado no mercado. A sobra é estimada e deve ser confirmada com frete, taxas e outros custos.</p>
+<section class="panel catalog-panel">
+<div class="section-heading"><h2>Catálogo</h2><span class="small">Use os filtros para encontrar produtos</span></div>
 <div class="filters">
 <div><label for="search">Procurar produto</label><input id="search" placeholder="SSD, mouse, hub USB..."></div>
 <div><label for="status">Situação do produto</label><select id="status"><option value="">Todos</option><option value="validated">Validados pelo fornecedor</option><option value="other">Outros / em análise</option></select></div>
@@ -394,10 +390,10 @@ function render(){
  <div class="product-body">
  <span class="tag">${safe(x.category)}</span> <span class="tag" style="background:${isValidated(x)?"#174d37":"#4b3a1b"};color:${isValidated(x)?"#a7f3d0":"#ffdf9c"}">${isValidated(x)?"VALIDADA PELO FORNECEDOR":"FORA DA VITRINE"}</span>
  <h3>${featuredIds.includes(x.id)?"⭐ ":""}${safe(x.name)}</h3>
- <p>${safe(x.note)}</p>
- <div class="price-line"><span class="small">Custo de compra confirmado</span><strong>${x.cost===null?"Não pesquisado":money(x.cost)}</strong></div>
+ <p class="product-note">${safe(x.note)}</p>
+ <div class="price-line"><span class="small">Custo de compra</span><strong>${x.cost===null?"Pendente":money(x.cost)}</strong></div>
  ${x.market?`<div class="price-line"><span class="small">Preço de varejo observado</span><strong>${money(x.market)}</strong></div>${x.cost===null?`<p class="small">Sem margem calculada: falta custo de compra real comparável. <a href="${x.marketUrl||x.url}" target="_blank" rel="noopener">Conferir referência ↗</a></p>`:`<p class="small">Spread bruto: <b>${money(x.market-x.cost)}</b> · líquido estimado com taxas e custos informados: <b>${money(x.market-x.cost-x.market*(Math.min(100,Math.max(0,+document.querySelector("#fees").value||0))/100)-Math.max(0,+document.querySelector("#freight").value||0))}</b></p><p class="small"><b>${(x.market-x.cost-x.market*(Math.min(100,Math.max(0,+document.querySelector("#fees").value||0))/100)-Math.max(0,+document.querySelector("#freight").value||0))>=Math.max(20,x.market*.15)?"POTENCIAL":(x.market-x.cost-x.market*(Math.min(100,Math.max(0,+document.querySelector("#fees").value||0))/100)-Math.max(0,+document.querySelector("#freight").value||0))>0?"MARGEM APERTADA":"NÃO COMPENSA"}</b>. <a href="${x.marketUrl||x.url}" target="_blank" rel="noopener">Conferir anúncio ↗</a></p>`}`:""}
- <p class="small">${safe(x.source)}${x.supplierUrl?` · <a href="${x.supplierUrl}" target="_blank" rel="noopener">Ver fornecedor atacadista ↗</a>`:""}</p>${!x.market?`<p class="small" style="border:1px solid #66532c;background:#122f51;color:#cce7ff;padding:9px;border-radius:8px"><b>${x.cost===null?"PREÇO PENDENTE":"SEM OPORTUNIDADE VALIDADA"}:</b> ${x.cost===null?"não há custo estimado nem cotação cadastrada. Use a busca para conferir uma oferta real e só então calcule a margem.":"ainda falta confirmar uma oferta de compra e um anúncio comparável de venda para este modelo."}</p>`:""}
+ <details class="product-details"><summary>Ver fonte e observações</summary><p class="small">${safe(x.source)}${x.supplierUrl?` · <a href="${x.supplierUrl}" target="_blank" rel="noopener">Fornecedor ↗</a>`:""}</p>${!x.market?`<p class="small">${x.cost===null?"Preço pendente: falta uma cotação de compra.":"Em análise: falta confirmar compra e venda do mesmo modelo."}</p>`:""}</details>
  <div class="product-actions">
  <a class="btn secondary" href="${x.url}" target="_blank" rel="noopener">Ver preço ↗</a>
  <button data-calc="${x.i}">Calcular lucro</button>
