@@ -68,23 +68,14 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 <div class="stat">Preços<strong>Confira no link</strong></div>
 </div>
 
-<div class="panel" id="catalog-tabs">
-  <h2>Radar ROP</h2>
-  <div class="product-actions">
-    <button type="button" id="tab-catalogo">Catálogo completo</button>
-    <button type="button" id="tab-top3" class="secondary">Top 3 para ficar de olho</button>
-  </div>
-  <p class="small">O Top 3 prioriza maior sobra teórica com os números publicados pelo fornecedor. Não representa vendas garantidas; revise frete, taxas e preço praticado antes de comprar.</p>
-</div>
-<section class="panel" id="top3-panel" hidden>
-  <h2>Top 3 para ficar de olho</h2>
-  <p>Classificação preliminar pela sobra estimada usando preço sugerido do fornecedor, taxa hipotética de 8% e R$ 10 por unidade para frete/outros custos. O valor real pode ser menor.</p>
-  <div id="top3-products"></div>
-</section>
-
 <div class="layout">
 <section class="panel">
-<h2>Radar de produtos</h2><p class="small">A vitrine inclui produtos com custo atacadista e preço de varejo sugerido publicados pelo próprio fornecedor. Isso valida a referência comercial do fornecedor, não garante que o preço será praticado no mercado. A sobra é estimada e deve ser confirmada com frete, taxas e outros custos.</p>
+<h2>Radar de produtos</h2>
+<div class="notice" id="top3-highlight">
+ <b>⭐ Top 3 para ficar de olho</b>
+ <p class="small">Destaques pela sobra teórica com preço sugerido do fornecedor, taxa de 8% e R$ 10 por unidade para frete/outros custos. Confirme todos os custos antes de comprar.</p>
+ <div id="top3-products"></div>
+</div><p class="small">A vitrine inclui produtos com custo atacadista e preço de varejo sugerido publicados pelo próprio fornecedor. Isso valida a referência comercial do fornecedor, não garante que o preço será praticado no mercado. A sobra é estimada e deve ser confirmada com frete, taxas e outros custos.</p>
 <div class="filters">
 <div><label for="search">Procurar produto</label><input id="search" placeholder="SSD, mouse, hub USB..."></div>
 <div><label for="category">Tipo de produto</label><select id="category"><option value="">Todos</option><option>Armazenamento</option><option>Periféricos</option><option>Rede e acessórios</option><option>Componentes</option><option>Acessórios</option><option>Casa e utilidades</option><option>Ferramentas</option><option>Pet</option><option>Celulares e acessórios</option><option>Áudio e vídeo</option><option>Energia e iluminação</option><option>Cozinha</option><option>Automotivo</option><option>Esporte e fitness</option><option>Moda e acessórios</option><option>Beleza e cuidados pessoais</option><option>Papelaria</option><option>Bebê e infantil</option><option>Viagem e organização</option><option>Brinquedos</option><option>Decoração</option><option>Higiene e limpeza</option><option>Camping e lazer</option><option>Jardinagem</option><option>Automação e segurança</option><option>Agro e ferramentas</option><option>Material de construção</option><option>Instrumentos musicais</option><option>Produtos para pequenos negócios</option></select></div>
@@ -412,9 +403,6 @@ document.querySelector("#clear").addEventListener("click",()=>{
  document.querySelector("#extra").value=0; document.querySelector("#quantity").value=1;
  calculate();
 });
-const catPanel=document.querySelector("#products").closest(".panel");
-document.querySelector("#tab-catalogo").addEventListener("click",()=>{document.querySelector("#top3-panel").hidden=true;catPanel.hidden=false;document.querySelector("#tab-catalogo").classList.remove("secondary");document.querySelector("#tab-top3").classList.add("secondary");});
-document.querySelector("#tab-top3").addEventListener("click",()=>{document.querySelector("#top3-panel").hidden=false;catPanel.hidden=true;document.querySelector("#tab-top3").classList.remove("secondary");document.querySelector("#tab-catalogo").classList.add("secondary");renderTop3();});
 render();calculate();renderTop3();
 </script>
 </body>
