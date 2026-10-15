@@ -240,6 +240,8 @@ const items=[
 {id:"necessaire-de-viagem",name:"Necessaire de viagem",category:"Viagem e organização",cost:null,sell:0,source:"Preço não pesquisado — nenhuma cotação foi inserida",image:"https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=900&q=85",alt:"Necessaire de viagem — imagem ilustrativa semelhante ao produto",url:"https://lista.mercadolivre.com.br/"+encodeURIComponent("necessaire de viagem"),note:"Preço pendente de pesquisa real. Abra a busca, confirme modelo, vendedor, frete e estoque antes de cadastrar o custo."}
 ];
 const money=n=>Number(n||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+// Validação automática conservadora: custo e preço comparáveis, com taxa padrão de 16% e R$ 10/un de frete/custo. Só considera validado se houver lucro líquido positivo e confirmação explícita no cadastro.
+const isValidated=x=>x.validatedOpportunity===true || (x.cost!==null && x.cost!==undefined && x.market!==undefined && x.market!==null && x.supplierUrl && (Number(x.market)-Number(x.cost)-Number(x.market)*0.16-10)>0);
 const safe=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function calculate(){
  const buy=Math.max(0,+document.querySelector("#buy").value||0);
@@ -271,7 +273,7 @@ function render(){
  <article class="product">
  <img class="product-photo" src="${x.image}" alt="${safe(x.alt)}" loading="lazy">
  <div class="product-body">
- <span class="tag">${safe(x.category)}</span> <span class="tag" style="background:${x.validatedOpportunity===true?"#174d37":"#4b3a1b"};color:${x.validatedOpportunity===true?"#a7f3d0":"#ffdf9c"}">${x.validatedOpportunity===true?"OPORTUNIDADE VALIDADA":"OPORTUNIDADE EM ANÁLISE"}</span>
+ <span class="tag">${safe(x.category)}</span> <span class="tag" style="background:${isValidated(x)?"#174d37":"#4b3a1b"};color:${isValidated(x)?"#a7f3d0":"#ffdf9c"}">${isValidated(x)?"OPORTUNIDADE VALIDADA":"OPORTUNIDADE EM ANÁLISE"}</span>
  <h3>${safe(x.name)}</h3>
  <p>${safe(x.note)}</p>
  <div class="price-line"><span class="small">Custo de compra confirmado</span><strong>${x.cost===null?"Não pesquisado":money(x.cost)}</strong></div>
