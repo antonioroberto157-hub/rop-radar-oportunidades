@@ -29,7 +29,17 @@ label{display:block;color:var(--muted);font-size:13px;margin-bottom:5px}
 input,select{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;background:#091525;color:white;font:inherit}
 button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;background:var(--mint);color:#092017;font-weight:bold;cursor:pointer}
 .secondary{background:#24364f;color:white;border:1px solid var(--line)}
-.product{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0}
+.product{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:14px 0;background:#0b1729}
+.product-photo{width:100%;height:155px;object-fit:cover;display:block;background:#15253a}
+.product-photo:not([src]){display:none}
+.product-body{padding:15px}
+.product h3{margin:10px 0 6px;font-size:18px}
+.price-line{display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap;margin:10px 0}
+.price-line strong{font-size:22px;color:var(--mint)}
+.product-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.product-actions a,.product-actions button{flex:1;text-align:center;min-width:120px}
+.tag{display:inline-block}
+@media(min-width:760px){#products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.product{margin:0}}
 .tag{font-size:11px;color:var(--gold);background:#2d3b50;border-radius:20px;padding:4px 8px}
 .small{font-size:12px}
 .result{background:#102d2a;border:1px solid #357c68;border-radius:12px;padding:14px;margin-top:15px}
@@ -49,8 +59,8 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 <header>
 <p style="color:var(--mint);font-weight:bold;letter-spacing:1px">PREÇOS E CONTAS, SEM COMPLICAÇÃO</p>
 <h1>Veja o preço.<br><span style="color:var(--mint)">Calcule quanto sobra.</span></h1>
-<p>Escolha um produto, confira o preço e faça uma conta rápida.</p>
-<div class="notice"><b>Atenção:</b> os preços são referências e podem mudar. Abra o link para conferir o valor atualizado. O lucro depende do preço pelo qual você conseguir vender.</div>
+<p>Veja produtos, confira o preço e calcule quanto pode sobrar.</p>
+<div class="notice"><b>Como usar:</b> confira o preço, toque em “Calcular lucro” e informe por quanto pretende vender.</div>
 </header>
 <div class="stats">
 <div class="stat">Produtos<strong id="count">3</strong></div>
@@ -59,7 +69,7 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 </div>
 <div class="layout">
 <section class="panel">
-<h2>Produtos para pesquisar</h2><p class="small">Toque em “Ver preço” para conferir a oferta.</p>
+<h2>Escolha um produto</h2><p class="small">Os valores são referências. Confirme a oferta antes de comprar.</p>
 <div class="filters">
 <div><label for="search">Procurar produto</label><input id="search" placeholder="SSD, mouse, hub USB..."></div>
 <div><label for="category">Tipo de produto</label><select id="category"><option value="">Todos</option><option>Armazenamento</option><option>Periféricos</option><option>Rede e acessórios</option><option>Componentes</option></select></div>
@@ -67,8 +77,8 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 <div id="products"></div>
 </section>
 <aside class="panel">
-<h2>Calcule seu lucro</h2>
-<p class="small">Informe os valores abaixo.</p>
+<h2>Quanto pode sobrar?</h2>
+<p class="small">Preencha o preço de venda e seus custos.</p>
 <div class="fields">
 <div><label for="buy">Quanto você paga (R$)</label><input id="buy" type="number" min="0" value="0"></div>
 <div><label for="sell">Por quanto vai vender (R$)</label><input id="sell" type="number" min="0" value="0"></div>
@@ -91,9 +101,9 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 </div>
 <script>
 const items=[
-{id:"ssd",name:"SSD Kingston NV3 — 1 TB",category:"Armazenamento",cost:1075.90,sell:0,source:"OFFERA — referência encontrada em consulta recente",url:"https://offera.ai/commerce/p/30529998-ssd-m-2-nvme-1tb-kingston-nv3-snv3s-1000g",query:"SSD Kingston NV3 1TB preço Brasil",note:"Preço encontrado em agregador. Confira vendedor, frete e valor final."},
-{id:"mouse",name:"Mouse Logitech G102",category:"Periféricos",cost:93.60,sell:0,source:"Pesquisa de preço — referência de anúncio",url:"https://www.google.com/search?q="+encodeURIComponent("Mouse Logitech G102 Shopee preço Brasil"),query:"Mouse Logitech G102 Shopee preço Brasil",note:"Preço de referência. Confira vendedor, frete e garantia."},
-{id:"hub",name:"Hub USB Exbom — 4 portas",category:"Rede e acessórios",cost:19.90,sell:0,source:"Pesquisa de preço — referência de anúncio",url:"https://www.google.com/search?q="+encodeURIComponent("Hub USB Exbom 4 portas Amazon Brasil preço"),query:"Hub USB Exbom 4 portas Amazon Brasil preço",note:"Preço de referência. Confira modelo e custo de envio."}
+{id:"ssd",name:"SSD Kingston NV3 — 1 TB",category:"Armazenamento",cost:1075.90,sell:0,source:"Oferta de referência via agregador",image:"https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=900&q=80",alt:"Unidade de armazenamento SSD",url:"https://offera.ai/commerce/p/30529998-ssd-m-2-nvme-1tb-kingston-nv3-snv3s-1000g",query:"SSD Kingston NV3 1TB preço Brasil",note:"Confira vendedor, frete e preço final."},
+{id:"mouse",name:"Mouse Logitech G102",category:"Periféricos",cost:93.60,sell:0,source:"Preço de referência para pesquisa",image:"https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=900&q=80",alt:"Mouse de computador",url:"https://www.google.com/search?q="+encodeURIComponent("Mouse Logitech G102 Shopee preço Brasil"),query:"Mouse Logitech G102 Shopee preço Brasil",note:"Confira modelo, vendedor, frete e garantia."},
+{id:"hub",name:"Hub USB Exbom — 4 portas",category:"Rede e acessórios",cost:19.90,sell:0,source:"Preço de referência para pesquisa",image:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=900&q=80",alt:"Acessório eletrônico e conectores",url:"https://www.google.com/search?q="+encodeURIComponent("Hub USB Exbom 4 portas Amazon Brasil preço"),query:"Hub USB Exbom 4 portas Amazon Brasil preço",note:"Confira modelo, compatibilidade e custo de envio."}
 ];
 const money=n=>Number(n||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
 const safe=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -124,13 +134,17 @@ function render(){
  document.querySelector("#count").textContent=filtered.length;
  document.querySelector("#products").innerHTML=filtered.length?filtered.map(x=>`
  <article class="product">
- <span class="tag">${safe(x.category)}</span> <span class="tag">Preço de referência</span>
+ <img class="product-photo" src="${x.image}" alt="${safe(x.alt)}" loading="lazy">
+ <div class="product-body">
+ <span class="tag">${safe(x.category)}</span>
  <h3>${safe(x.name)}</h3>
  <p>${safe(x.note)}</p>
- <p><b>Preço de referência: ${money(x.cost)}</b></p>
+ <div class="price-line"><span class="small">Preço de referência</span><strong>${money(x.cost)}</strong></div>
  <p class="small">${safe(x.source)}</p>
+ <div class="product-actions">
  <a class="btn secondary" href="${x.url}" target="_blank" rel="noopener">Ver preço ↗</a>
  <button data-calc="${x.i}">Calcular lucro</button>
+ </div></div>
  </article>`).join(""):"<p>Nenhum item encontrado com esses filtros.</p>";
  document.querySelectorAll("[data-calc]").forEach(btn=>btn.addEventListener("click",()=>{
   const x=items[+btn.dataset.calc];
