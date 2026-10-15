@@ -67,6 +67,21 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 <div class="stat">Conta rápida<strong>Lucro estimado</strong></div>
 <div class="stat">Preços<strong>Confira no link</strong></div>
 </div>
+
+<div class="panel" id="catalog-tabs">
+  <h2>Radar ROP</h2>
+  <div class="product-actions">
+    <button type="button" id="tab-catalogo">Catálogo completo</button>
+    <button type="button" id="tab-top3" class="secondary">Top 3 para ficar de olho</button>
+  </div>
+  <p class="small">O Top 3 prioriza maior sobra teórica com os números publicados pelo fornecedor. Não representa vendas garantidas; revise frete, taxas e preço praticado antes de comprar.</p>
+</div>
+<section class="panel" id="top3-panel" hidden>
+  <h2>Top 3 para ficar de olho</h2>
+  <p>Classificação preliminar pela sobra estimada usando preço sugerido do fornecedor, taxa hipotética de 8% e R$ 10 por unidade para frete/outros custos. O valor real pode ser menor.</p>
+  <div id="top3-products"></div>
+</section>
+
 <div class="layout">
 <section class="panel">
 <h2>Radar de produtos</h2><p class="small">A vitrine inclui produtos com custo atacadista e preço de varejo sugerido publicados pelo próprio fornecedor. Isso valida a referência comercial do fornecedor, não garante que o preço será praticado no mercado. A sobra é estimada e deve ser confirmada com frete, taxas e outros custos.</p>
@@ -331,6 +346,29 @@ function calculate(){
  document.querySelector("#roi").textContent=roi.toLocaleString("pt-BR",{maximumFractionDigits:1})+"%";
  document.querySelector("#summary").textContent="Margem sobre venda: "+margin.toLocaleString("pt-BR",{maximumFractionDigits:1})+"%. Estimativa antes de custos não informados.";
 }
+function renderTop3(){
+ const picks=[
+  {id:"aparelho-tv-uni",label:"Maior sobra teórica",reason:"Maior diferença estimada entre custo e preço sugerido; confirmar modelo, garantia e preço praticado."},
+  {id:"panela-pressao-10l",label:"Sobra alta",reason:"Preço sugerido deixa uma diferença teórica interessante; validar frete, segurança e procura."},
+  {id:"panela-pressao-5l-antiaderente",label:"Alternativa de cozinha",reason:"Diferença teórica relevante; conferir concorrência, frete e garantia."}
+ ];
+ const host=document.querySelector("#top3-products");
+ host.innerHTML=picks.map(p=>{
+  const x=items.find(i=>i.id===p.id);
+  if(!x) return "";
+  const fee=Math.min(100,Math.max(0,+document.querySelector("#fees").value||0))/100;
+  const freight=Math.max(0,+document.querySelector("#freight").value||0);
+  const profit=Number(x.market||x.sell||0)-Number(x.cost||0)-Number(x.market||x.sell||0)*fee-freight;
+  return `<article class="product"><div class="product-body"><span class="tag">${safe(p.label)}</span><h3>${safe(x.name)}</h3><p>${safe(p.reason)}</p><div class="price-line"><span class="small">Custo atacadista publicado</span><strong>${money(x.cost)}</strong></div><div class="price-line"><span class="small">Preço sugerido fornecedor</span><strong>${money(x.market||x.sell)}</strong></div><p class="small">Sobra teórica: <b>${money(profit)}</b> por unidade, com taxa atual de ${(fee*100).toLocaleString("pt-BR")}% e provisão de ${money(freight)} para frete/outros custos. Não é lucro confirmado.</p><p class="small">${safe(x.source)}</p><div class="product-actions"><a class="btn secondary" href="${x.url}" target="_blank" rel="noopener">Ver fornecedor ↗</a><button data-topcalc="${p.id}">Calcular</button></div></div></article>`;
+ }).join("");
+ document.querySelectorAll("[data-topcalc]").forEach(btn=>btn.addEventListener("click",()=>{
+  const x=items.find(i=>i.id===btn.dataset.topcalc);
+  document.querySelector("#buy").value=x.cost;
+  document.querySelector("#sell").value=x.market||x.sell||0;
+  calculate();
+  document.querySelector("#sell").focus();
+ }));
+}
 function render(){
  const search=document.querySelector("#search").value.toLowerCase();
  const category=document.querySelector("#category").value;
@@ -374,7 +412,10 @@ document.querySelector("#clear").addEventListener("click",()=>{
  document.querySelector("#extra").value=0; document.querySelector("#quantity").value=1;
  calculate();
 });
-render();calculate();
+const catPanel=document.querySelector("#products").closest(".panel");
+document.querySelector("#tab-catalogo").addEventListener("click",()=>{document.querySelector("#top3-panel").hidden=true;catPanel.hidden=false;document.querySelector("#tab-catalogo").classList.remove("secondary");document.querySelector("#tab-top3").classList.add("secondary");});
+document.querySelector("#tab-top3").addEventListener("click",()=>{document.querySelector("#top3-panel").hidden=false;catPanel.hidden=true;document.querySelector("#tab-top3").classList.remove("secondary");document.querySelector("#tab-catalogo").classList.add("secondary");renderTop3();});
+render();calculate();renderTop3();
 </script>
 </body>
                                                    </html>
