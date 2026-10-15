@@ -66,6 +66,7 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 <h1>Encontre. Compare. <span>Calcule.</span></h1>
 <p>Produtos e referências de compra para você analisar antes de revender.</p>
 </header>
+<section class="panel" id="meu-radar"><h2>Monte seu radar</h2><p>Informe quanto pode investir e a margem estimada que procura. O ROP filtra o catálogo disponível com esses critérios.</p><div class="fields"><div><label for="radarBudget">Meu capital disponível (R$)</label><input id="radarBudget" type="number" min="0" step="10" placeholder="Ex.: 500"></div><div><label for="radarMargin">Margem estimada desejada</label><select id="radarMargin"><option value="">Qualquer margem</option><option value="0">Acima de 0%</option><option value="10">10% ou mais</option><option value="20">20% ou mais</option><option value="30">30% ou mais</option></select></div></div><button id="runRadar" type="button" style="margin-top:12px">Encontrar produtos para mim</button><p class="small">A seleção é uma triagem matemática baseada nos dados cadastrados, não uma previsão de vendas. Preços sugeridos podem não ser praticados no mercado.</p></section>
 <div class="catalog-count"><strong id="count">0</strong> produtos nesta seleção</div>
 
 <div class="layout">
@@ -432,6 +433,8 @@ function render(){
 }
 ["buy","sell","freight","fees","extra","targetMargin","quantity"].forEach(id=>document.querySelector("#"+id).addEventListener("input",()=>{calculate();render();}));
 ["search","category","status","budget","minMargin"].forEach(id=>document.querySelector("#"+id).addEventListener(id==="search"||id==="budget"?"input":"change",render));
+document.querySelector("#runRadar").addEventListener("click",()=>{const budget=document.querySelector("#radarBudget").value;const margin=document.querySelector("#radarMargin").value;document.querySelector("#budget").value=budget;document.querySelector("#minMargin").value=margin;document.querySelector("#status").value="";document.querySelector("#category").value="";document.querySelector("#search").value="";render();document.querySelector("#count").scrollIntoView({behavior:"smooth",block:"center"});});
+
 document.querySelector("#useSuggested").addEventListener("click",()=>{const buy=Math.max(0,+document.querySelector("#buy").value||0);const freight=Math.max(0,+document.querySelector("#freight").value||0);const fees=Math.min(100,Math.max(0,+document.querySelector("#fees").value||0))/100;const extra=Math.max(0,+document.querySelector("#extra").value||0);const target=Math.min(90,Math.max(0,+document.querySelector("#targetMargin").value||0))/100;const den=1-fees-target;if(buy>0&&den>0){document.querySelector("#sell").value=(Math.ceil(((buy+freight+extra)/den)*100)/100).toFixed(2);calculate();}});
 document.querySelector("#clear").addEventListener("click",()=>{
  document.querySelector("#buy").value=0; document.querySelector("#sell").value=0;
