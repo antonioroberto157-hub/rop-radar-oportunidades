@@ -69,7 +69,7 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 </div>
 <div class="layout">
 <section class="panel">
-<h2>Radar de produtos</h2><p class="small">Aqui entram apenas produtos que passaram por validação de preço comparável e lucro líquido. Não vamos preencher a vitrine com pistas ou margens teóricas só para aumentar a quantidade.</p>
+<h2>Radar de produtos</h2><p class="small">A vitrine inclui produtos com custo atacadista e preço de varejo sugerido publicados pelo próprio fornecedor. Isso valida a referência comercial do fornecedor, não garante que o preço será praticado no mercado. A sobra é estimada e deve ser confirmada com frete, taxas e outros custos.</p>
 <div class="filters">
 <div><label for="search">Procurar produto</label><input id="search" placeholder="SSD, mouse, hub USB..."></div>
 <div><label for="category">Tipo de produto</label><select id="category"><option value="">Todos</option><option>Armazenamento</option><option>Periféricos</option><option>Rede e acessórios</option><option>Componentes</option><option>Acessórios</option><option>Casa e utilidades</option><option>Ferramentas</option><option>Pet</option><option>Celulares e acessórios</option><option>Áudio e vídeo</option><option>Energia e iluminação</option><option>Cozinha</option><option>Automotivo</option><option>Esporte e fitness</option><option>Moda e acessórios</option><option>Beleza e cuidados pessoais</option><option>Papelaria</option><option>Bebê e infantil</option><option>Viagem e organização</option><option>Brinquedos</option><option>Decoração</option><option>Higiene e limpeza</option><option>Camping e lazer</option><option>Jardinagem</option><option>Automação e segurança</option><option>Agro e ferramentas</option><option>Material de construção</option><option>Instrumentos musicais</option><option>Produtos para pequenos negócios</option></select></div>
@@ -261,7 +261,7 @@ const items=[
 ];
 const money=n=>Number(n||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
 // Validação automática conservadora: custo e preço comparáveis, com taxa padrão de 8% e R$ 10/un de frete/custo. Só considera validado se houver lucro líquido positivo e confirmação explícita no cadastro.
-const isValidated=x=>x.validatedOpportunity===true || (x.cost!==null && x.cost!==undefined && x.market!==undefined && x.market!==null && x.supplierUrl && (Number(x.market)-Number(x.cost)-Number(x.market)*0.08-10)>0);
+const isValidated=x=>x.validatedOpportunity===true && x.cost!==null && x.cost!==undefined && x.market!==undefined && x.market!==null && !!x.supplierUrl;
 const safe=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function calculate(){
  const buy=Math.max(0,+document.querySelector("#buy").value||0);
@@ -283,7 +283,7 @@ function render(){
  const search=document.querySelector("#search").value.toLowerCase();
  const category=document.querySelector("#category").value;
  let filtered=items.map((x,i)=>({...x,i,margin:null}))
- .filter(x=>false) // Vitrine estrita: nenhum SKU está aprovado até confirmar preço de venda independente e lucro líquido com custos reais.
+ .filter(x=>["squishy-baozi-atacado","walkie-talkie-infantil","panela-pressao-45l","elefante-toca-tambor","colcha-casal-king","centro-mesa-decorativo","aparelho-tv-uni","panela-pressao-10l","panela-antiaderente-45l","panela-pressao-5l-antiaderente","gloss-kit-4"].includes(x.id)) // Inclui apenas itens com custo e preço sugerido publicados pelo fornecedor; selo deve explicitar que o preço é sugerido, não venda garantida.
  .filter(x=>(x.name+" "+x.category+" "+x.source+" "+x.note).toLowerCase().includes(search)&&(!category||x.category===category));
  // Prices are research references, not comparable purchase/sale pairs, so don't filter as if
  // their margin were known. The user can use the calculator after entering an actual resale price.
@@ -293,7 +293,7 @@ function render(){
  <article class="product">
  <img class="product-photo" src="${x.image}" alt="${safe(x.alt)}" loading="lazy">
  <div class="product-body">
- <span class="tag">${safe(x.category)}</span> <span class="tag" style="background:${isValidated(x)?"#174d37":"#4b3a1b"};color:${isValidated(x)?"#a7f3d0":"#ffdf9c"}">${isValidated(x)?"OPORTUNIDADE VALIDADA":"OPORTUNIDADE EM ANÁLISE"}</span>
+ <span class="tag">${safe(x.category)}</span> <span class="tag" style="background:${isValidated(x)?"#174d37":"#4b3a1b"};color:${isValidated(x)?"#a7f3d0":"#ffdf9c"}">${isValidated(x)?"VALIDADA PELO FORNECEDOR":"FORA DA VITRINE"}</span>
  <h3>${safe(x.name)}</h3>
  <p>${safe(x.note)}</p>
  <div class="price-line"><span class="small">Custo de compra confirmado</span><strong>${x.cost===null?"Não pesquisado":money(x.cost)}</strong></div>
@@ -303,7 +303,7 @@ function render(){
  <a class="btn secondary" href="${x.url}" target="_blank" rel="noopener">Ver preço ↗</a>
  <button data-calc="${x.i}">Calcular lucro</button>
  </div></div>
- </article>`).join("") : "<div class=\"notice\"><b>Nenhuma oportunidade validada disponível no momento.</b><p>Os produtos pesquisados até agora não comprovaram preço de venda independente e lucro líquido com custos completos. Preferimos deixar a vitrine vazia a recomendar compra sem evidência suficiente.</p></div>";
+ </article>`).join("") : "<div class=\"notice\"><b>Nenhum produto desta seleção corresponde aos filtros.</b><p>A vitrine prioriza produtos com custo atacadista e preço sugerido de varejo publicados pelo fornecedor. O preço sugerido não é garantia de venda; confira custos e concorrência antes de comprar.</p></div>";
  document.querySelectorAll(".product-photo").forEach(img=>img.addEventListener("error",()=>{img.style.display="none";}));
  document.querySelectorAll("[data-calc]").forEach(btn=>btn.addEventListener("click",()=>{
   const x=items[+btn.dataset.calc];
