@@ -5,12 +5,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Catálogo de oportunidades | ROP</title>
+<meta name="theme-color" content="#09111f"><meta name="description" content="Referências de pesquisa e calculadora de margem do ROP. Confira fontes, taxas e custos antes de comprar para revender.">
 <style>
 :root{--bg:#09111f;--panel:#111e32;--line:#2b405d;--muted:#a9b9d0;--mint:#8ee6c2;--gold:#f5d48a}
 *{box-sizing:border-box}
 body{margin:0;background:radial-gradient(ellipse at 90% 0%,#1b3150,transparent 38%),var(--bg);color:#f2f6ff;font:16px/1.55 system-ui,sans-serif}
 .wrap{max-width:1080px;margin:auto;padding:20px}
 nav{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 0;border-bottom:1px solid #ffffff20;font-weight:bold}
+.brand{display:flex;align-items:center;gap:10px}
+.logo-icon{width:38px;height:38px;display:block;flex-shrink:0}
+.logo-type{display:flex;flex-direction:column;line-height:1.15}
+.logo-type strong{letter-spacing:.12em;font-size:14px;color:#8ee6c2}
+.logo-type span{font-size:12px;font-weight:500;color:var(--muted)}
 .logo{background:linear-gradient(145deg,#a5f3d1,#55c99b);color:#08241a;padding:8px 12px;border-radius:10px}
 a{color:var(--mint);text-decoration:none}
 h1{font-size:clamp(30px,5vw,44px);line-height:1.1}
@@ -37,26 +43,28 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 </head>
 <body>
 <div class="wrap">
-<nav><div><span class="logo">ROP</span> Radar de Oportunidades</div><a href="index.html">Página inicial ↗</a></nav>
+<nav><a class="brand" href="index.html" aria-label="ROP — Página inicial">
+<svg class="logo-icon" viewBox="0 0 64 64" role="img" aria-label="Logo ROP"><rect x="2" y="2" width="60" height="60" rx="16" fill="#8ee6c2"/><path d="M16 45V18h15c9 0 14 4 14 12 0 6-3 10-9 12l10 8H34l-9-8h-1v8H16zm8-17v7h7c4 0 6-1 6-4s-2-3-6-3h-7z" fill="#08241a"/><circle cx="48" cy="17" r="5" fill="#08241a"/></svg>
+<span class="logo-type"><strong>ROP</strong><span>Radar de Oportunidades</span></span></a><a href="index.html">Página inicial ↗</a></nav>
 <header>
 <p style="color:var(--mint);font-weight:bold;letter-spacing:1px">PESQUISA DE REVENDA, SEM ACHISMO</p>
 <h1>Compare custos.<br><span style="color:var(--mint)">Estime sua margem.</span></h1>
 <p>Pesquise produtos, confira preços atuais e calcule se a revenda faz sentido.</p>
-<div class="notice"><b>Importante:</b> os preços abaixo são exemplos para simulação, não ofertas verificadas em tempo real.</div>
+<div class="notice"><b>Transparência:</b> preços de referência sujeitos a alteração. Consulte a oferta original, vendedor, frete e garantia. A diferença entre duas ofertas não comprova lucro nem demanda de revenda.</div>
 </header>
 <div class="stats">
-<div class="stat">Produtos no catálogo<strong id="count">6</strong></div>
-<div class="stat">Filtro de margem<strong>Personalizável</strong></div>
-<div class="stat">Preços<strong>Simulados</strong></div>
+<div class="stat">Itens de referência<strong id="count">3</strong></div>
+<div class="stat">Calculadora<strong>Custos e taxas</strong></div>
+<div class="stat">Preços<strong>Consultar fonte</strong></div>
 </div>
 <div class="layout">
 <section class="panel">
-<h2>Catálogo preliminar</h2>
+<h2>Referências para investigar</h2><p class="small">Cada link abre uma pesquisa ou página de referência. Confirme o modelo e o preço final antes de qualquer decisão.</p>
 <div class="filters">
 <div><label for="search">Buscar produto</label><input id="search" placeholder="SSD, mouse, teclado..."></div>
 <div><label for="category">Categoria</label><select id="category"><option value="">Todas</option><option>Armazenamento</option><option>Periféricos</option><option>Rede e acessórios</option><option>Componentes</option></select></div>
-<div><label for="minmargin">Margem mínima</label><select id="minmargin"><option value="-100">Qualquer</option><option value="0">Acima de 0%</option><option value="10">10% ou mais</option><option value="20">20% ou mais</option><option value="30">30% ou mais</option></select></div>
-<div><label for="sort">Ordenar</label><select id="sort"><option value="name">Nome</option><option value="margin">Maior margem simulada</option></select></div>
+<div><label for="minmargin">Margem mínima</label><select id="minmargin"><option value="-100">Não aplicável às referências</option></select></div>
+<div><label for="sort">Ordenar</label><select id="sort"><option value="name">Nome</option></select></div>
 </div>
 <div id="products"></div>
 </section>
@@ -78,75 +86,72 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 <div class="stat">Retorno sobre custo<strong id="roi">20,0%</strong></div>
 </div>
 <button id="clear" class="secondary">Limpar valores</button>
-<p class="small">Inclua impostos, devoluções e custos operacionais quando aplicáveis. Valores são estimativas.</p>
+<p class="small">Só informe o preço de venda após pesquisar anúncios realmente comparáveis. A calculadora não valida demanda nem garante vendas.</p>
 </aside>
 </div>
 <footer><p>ROP — Radar de Oportunidades. Confirme preços, disponibilidade e procura antes de comprar.</p></footer>
 </div>
 <script>
 const items=[
-{name:"SSD Kingston NV3 — 1 TB",category:"Armazenamento",cost:330,sell:420,desc:"Armazenamento para sistema, programas e arquivos.",q:"SSD Kingston NV3 1TB preço"},
-{name:"Mouse Logitech G102",category:"Periféricos",cost:110,sell:150,desc:"Mouse com fio para tarefas diárias e jogos.",q:"Mouse Logitech G102 preço"},
-{name:"Adaptador Wi-Fi USB",category:"Rede e acessórios",cost:35,sell:55,desc:"Conectividade sem fio para computadores compatíveis.",q:"adaptador wifi USB preço"},
-{name:"Teclado mecânico de entrada",category:"Periféricos",cost:150,sell:220,desc:"Opção de entrada para trabalho e jogos.",q:"teclado mecânico entrada preço"},
-{name:"Memória RAM DDR4 16 GB",category:"Componentes",cost:160,sell:230,desc:"Componente para upgrades compatíveis.",q:"memória RAM DDR4 16GB preço"},
-{name:"Hub USB 4 portas",category:"Rede e acessórios",cost:30,sell:50,desc:"Expande portas USB para escritório e casa.",q:"hub USB 4 portas preço"}
+{id:"ssd",name:"SSD Kingston NV3 — 1 TB",category:"Armazenamento",cost:1075.90,sell:0,source:"OFFERA — referência encontrada em consulta recente",url:"https://offera.ai/commerce/p/30529998-ssd-m-2-nvme-1tb-kingston-nv3-snv3s-1000g",query:"SSD Kingston NV3 1TB preço Brasil",note:"A página agregadora indicava oferta via Shopee. Confirme estoque, vendedor e preço final."},
+{id:"mouse",name:"Mouse Logitech G102",category:"Periféricos",cost:93.60,sell:0,source:"Pesquisa de preço — referência de anúncio",url:"https://www.google.com/search?q="+encodeURIComponent("Mouse Logitech G102 Shopee preço Brasil"),query:"Mouse Logitech G102 Shopee preço Brasil",note:"Valor indicativo de pesquisa; confira versão, vendedor, frete e garantia."},
+{id:"hub",name:"Hub USB Exbom — 4 portas",category:"Rede e acessórios",cost:19.90,sell:0,source:"Pesquisa de preço — referência de anúncio",url:"https://www.google.com/search?q="+encodeURIComponent("Hub USB Exbom 4 portas Amazon Brasil preço"),query:"Hub USB Exbom 4 portas Amazon Brasil preço",note:"Valor indicativo de pesquisa; confirme especificação, conexão e custo de envio."}
 ];
 const money=n=>Number(n||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+const safe=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function calculate(){
-const buy=+document.querySelector("#buy").value||0;
-const sell=+document.querySelector("#sell").value||0;
-const freight=+document.querySelector("#freight").value||0;
-const fees=(+document.querySelector("#fees").value||0)/100;
-const extra=+document.querySelector("#extra").value||0;
-const qty=Math.max(1,+document.querySelector("#quantity").value||1);
-const profit=sell-buy-freight-sell*fees-extra;
-const base=buy+freight+extra;
-const margin=sell?profit/sell*100:0;
-const roi=base?profit/base*100:0;
-document.querySelector("#profit").textContent=money(profit);
-document.querySelector("#profit").style.color=profit<0?"#ff9999":"var(--mint)";
-document.querySelector("#total").textContent=money(profit*qty);
-document.querySelector("#margin").textContent=margin.toLocaleString("pt-BR",{maximumFractionDigits:1})+"%";
-document.querySelector("#roi").textContent=roi.toLocaleString("pt-BR",{maximumFractionDigits:1})+"%";
-document.querySelector("#summary").textContent="Margem sobre venda: "+margin.toLocaleString("pt-BR",{maximumFractionDigits:1})+"%. Taxas calculadas sobre o preço de venda.";
+ const buy=Math.max(0,+document.querySelector("#buy").value||0);
+ const sell=Math.max(0,+document.querySelector("#sell").value||0);
+ const freight=Math.max(0,+document.querySelector("#freight").value||0);
+ const fees=Math.min(100,Math.max(0,+document.querySelector("#fees").value||0))/100;
+ const extra=Math.max(0,+document.querySelector("#extra").value||0);
+ const qty=Math.max(1,Math.floor(+document.querySelector("#quantity").value||1));
+ const profit=sell-buy-freight-sell*fees-extra, base=buy+freight+extra;
+ const margin=sell?profit/sell*100:0, roi=base?profit/base*100:0;
+ document.querySelector("#profit").textContent=money(profit);
+ document.querySelector("#profit").style.color=profit<0?"#ff9999":"var(--mint)";
+ document.querySelector("#total").textContent=money(profit*qty);
+ document.querySelector("#margin").textContent=margin.toLocaleString("pt-BR",{maximumFractionDigits:1})+"%";
+ document.querySelector("#roi").textContent=roi.toLocaleString("pt-BR",{maximumFractionDigits:1})+"%";
+ document.querySelector("#summary").textContent="Margem sobre venda: "+margin.toLocaleString("pt-BR",{maximumFractionDigits:1})+"%. Estimativa antes de custos não informados.";
 }
 function render(){
-const search=document.querySelector("#search").value.toLowerCase();
-const category=document.querySelector("#category").value;
-const min=+document.querySelector("#minmargin").value;
-const sort=document.querySelector("#sort").value;
-let filtered=items.map((x,i)=>({...x,i,margin:(x.sell-x.cost-x.sell*.12)/x.sell*100}))
-.filter(x=>(x.name+" "+x.desc).toLowerCase().includes(search)&&(!category||x.category===category)&&x.margin>=min);
-if(sort==="margin")filtered.sort((a,b)=>b.margin-a.margin);
-else filtered.sort((a,b)=>a.name.localeCompare(b.name));
-document.querySelector("#count").textContent=filtered.length;
-document.querySelector("#products").innerHTML=filtered.length?filtered.map(x=>`
-<article class="product">
-<span class="tag">${x.category}</span> <span class="tag">Exemplo</span>
-<h3>${x.name}</h3><p>${x.desc}</p>
-<p class="small">Compra simulada: ${money(x.cost)} · Venda simulada: ${money(x.sell)}</p>
-<button data-calc="${x.i}">Calcular margem</button>
-<a class="btn secondary" target="_blank" rel="noopener" href="https://www.google.com/search?q=${encodeURIComponent(x.q)}">Pesquisar preço ↗</a>
-</article>`).join(""):"<p>Nenhum produto encontrado com esses filtros.</p>";
-document.querySelectorAll("[data-calc]").forEach(btn=>btn.addEventListener("click",()=>{
-const x=items[+btn.dataset.calc];
-document.querySelector("#buy").value=x.cost;
-document.querySelector("#sell").value=x.sell;
-calculate();
-document.querySelector("#buy").scrollIntoView({behavior:"smooth",block:"center"});
-}));
+ const search=document.querySelector("#search").value.toLowerCase();
+ const category=document.querySelector("#category").value;
+ const min=+document.querySelector("#minmargin").value;
+ const sort=document.querySelector("#sort").value;
+ let filtered=items.map((x,i)=>({...x,i,margin:null}))
+ .filter(x=>(x.name+" "+x.category+" "+x.source+" "+x.note).toLowerCase().includes(search)&&(!category||x.category===category));
+ // Prices are research references, not comparable purchase/sale pairs, so don't filter as if
+ // their margin were known. The user can use the calculator after entering an actual resale price.
+ if(sort==="margin") filtered.sort((a,b)=>a.name.localeCompare(b.name));
+ else filtered.sort((a,b)=>a.name.localeCompare(b.name));
+ document.querySelector("#count").textContent=filtered.length;
+ document.querySelector("#products").innerHTML=filtered.length?filtered.map(x=>`
+ <article class="product">
+ <span class="tag">${safe(x.category)}</span> <span class="tag">Referência de pesquisa</span>
+ <h3>${safe(x.name)}</h3>
+ <p>${safe(x.note)}</p>
+ <p><b>Preço de referência: ${money(x.cost)}</b></p>
+ <p class="small">${safe(x.source)}</p>
+ <a class="btn secondary" href="${x.url}" target="_blank" rel="noopener">Consultar fonte ↗</a>
+ <button data-calc="${x.i}">Usar na calculadora</button>
+ </article>`).join(""):"<p>Nenhum item encontrado com esses filtros.</p>";
+ document.querySelectorAll("[data-calc]").forEach(btn=>btn.addEventListener("click",()=>{
+  const x=items[+btn.dataset.calc];
+  document.querySelector("#buy").value=x.cost.toFixed(2);
+  document.querySelector("#sell").value="";
+  calculate();
+  document.querySelector("#sell").focus();
+ }));
 }
 ["buy","sell","freight","fees","extra","quantity"].forEach(id=>document.querySelector("#"+id).addEventListener("input",calculate));
 ["search","category","minmargin","sort"].forEach(id=>document.querySelector("#"+id).addEventListener(id==="search"?"input":"change",render));
 document.querySelector("#clear").addEventListener("click",()=>{
-document.querySelector("#buy").value=0;
-document.querySelector("#sell").value=0;
-document.querySelector("#freight").value=0;
-document.querySelector("#fees").value=0;
-document.querySelector("#extra").value=0;
-document.querySelector("#quantity").value=1;
-calculate();
+ document.querySelector("#buy").value=0; document.querySelector("#sell").value=0;
+ document.querySelector("#freight").value=0; document.querySelector("#fees").value=0;
+ document.querySelector("#extra").value=0; document.querySelector("#quantity").value=1;
+ calculate();
 });
 render();calculate();
 </script>
