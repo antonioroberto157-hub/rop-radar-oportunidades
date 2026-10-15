@@ -81,13 +81,14 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 <p class="small">Preencha o preço de venda e seus custos. A taxa inicial de 8% é uma hipótese para venda direta/checkout simples, não uma tarifa oficial de marketplace; ajuste conforme seu canal.</p>
 <div class="fields">
 <div><label for="buy">Quanto você paga (R$)</label><input id="buy" type="number" min="0" value="0"></div>
-<div><label for="sell">Por quanto vai vender (R$)</label><input id="sell" type="number" min="0" value="0"></div>
+<div><label for="sell">Preço de venda escolhido (R$)</label><input id="sell" type="number" min="0" value="0"></div>
 <div><label for="freight">Frete/custo por unidade (R$)</label><input id="freight" type="number" min="0" value="10"></div>
 <div><label for="fees">Taxas de venda (%) — padrão 8%</label><input id="fees" type="number" min="0" max="100" value="8"></div>
 <div><label for="extra">Outros gastos (R$)</label><input id="extra" type="number" min="0" value="0"></div>
+<div><label for="targetMargin">Margem líquida desejada (%)</label><input id="targetMargin" type="number" min="0" max="90" value="20"></div>
 <div><label for="quantity">Quantas unidades</label><input id="quantity" type="number" min="1" value="1"></div>
 </div>
-<div class="result">Sobra por unidade<strong id="profit" style="display:block">R$ 0,00</strong><p id="summary">Informe os valores para ver o resultado</p></div>
+<div class="result"><span class="small">Sugestão de preço ao cliente · com margem líquida desejada</span><strong id="suggestedPrice" style="display:block">Informe o custo</strong><button id="useSuggested" class="secondary" type="button" style="margin-top:8px">Usar preço sugerido</button><div style="border-top:1px solid #1763a2;margin-top:14px;padding-top:12px">Sobra por unidade<strong id="profit" style="display:block">R$ 0,00</strong><p id="summary">Informe os valores para ver o resultado</p></div></div>
 <div class="stats">
 <div class="stat">Sobra total<strong id="total">R$ 0,00</strong></div>
 <div class="stat">Margem<strong id="margin">0,0%</strong></div>
@@ -361,8 +362,14 @@ function calculate(){
  const freight=Math.max(0,+document.querySelector("#freight").value||0);
  const fees=Math.min(100,Math.max(0,+document.querySelector("#fees").value||0))/100;
  const extra=Math.max(0,+document.querySelector("#extra").value||0);
+ const targetMargin=Math.min(90,Math.max(0,+document.querySelector("#targetMargin").value||0))/100;
  const qty=Math.max(1,Math.floor(+document.querySelector("#quantity").value||1));
- const profit=sell-buy-freight-sell*fees-extra, base=buy+freight+extra;
+ const base=buy+freight+extra;
+ const suggestedDenominator=1-fees-targetMargin;
+ const suggested=suggestedDenominator>0?base/suggestedDenominator:0;
+ document.querySelector("#suggestedPrice").textContent=buy>0?money(Math.ceil(suggested*100)/100):"Informe o custo de compra";
+ document.querySelector("#useSuggested").disabled=!(buy>0&&suggestedDenominator>0);
+ const profit=sell-buy-freight-sell*fees-extra;
  const margin=sell?profit/sell*100:0, roi=base?profit/base*100:0;
  document.querySelector("#profit").textContent=money(profit);
  document.querySelector("#profit").style.color=profit<0?"#ff9999":"var(--mint)";
@@ -409,12 +416,13 @@ function render(){
   if(x.cost===null) document.querySelector("#summary").textContent="Informe o custo real de compra e o preço real de venda para calcular. Nenhuma estimativa foi usada.";
  }));
 }
-["buy","sell","freight","fees","extra","quantity"].forEach(id=>document.querySelector("#"+id).addEventListener("input",()=>{calculate();render();}));
+["buy","sell","freight","fees","extra","targetMargin","quantity"].forEach(id=>document.querySelector("#"+id).addEventListener("input",()=>{calculate();render();}));
 ["search","category","status"].forEach(id=>document.querySelector("#"+id).addEventListener(id==="search"?"input":"change",render));
+document.querySelector("#useSuggested").addEventListener("click",()=>{const buy=Math.max(0,+document.querySelector("#buy").value||0);const freight=Math.max(0,+document.querySelector("#freight").value||0);const fees=Math.min(100,Math.max(0,+document.querySelector("#fees").value||0))/100;const extra=Math.max(0,+document.querySelector("#extra").value||0);const target=Math.min(90,Math.max(0,+document.querySelector("#targetMargin").value||0))/100;const den=1-fees-target;if(buy>0&&den>0){document.querySelector("#sell").value=(Math.ceil(((buy+freight+extra)/den)*100)/100).toFixed(2);calculate();}});
 document.querySelector("#clear").addEventListener("click",()=>{
  document.querySelector("#buy").value=0; document.querySelector("#sell").value=0;
  document.querySelector("#freight").value=10; document.querySelector("#fees").value=8;
- document.querySelector("#extra").value=0; document.querySelector("#quantity").value=1;
+ document.querySelector("#extra").value=0; document.querySelector("#targetMargin").value=20; document.querySelector("#quantity").value=1;
  calculate();
 });
 render();calculate();renderTop3();
