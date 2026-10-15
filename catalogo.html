@@ -311,7 +311,7 @@ function render(){
 ["search","category"].forEach(id=>document.querySelector("#"+id).addEventListener(id==="search"?"input":"change",render));
 document.querySelector("#clear").addEventListener("click",()=>{
  document.querySelector("#buy").value=0; document.querySelector("#sell").value=0;
- document.querySelector("#freight").value=10; document.querySelector("#fees").value=16;
+ document.querySelector("#freight").value=10; document.querySelector("#fees").value=8;
  document.querySelector("#extra").value=0; document.querySelector("#quantity").value=1;
  calculate();
 });
