@@ -68,6 +68,7 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 </header>
 <details class="panel" id="meu-radar"><summary style="cursor:pointer;font-weight:700">Personalize sua busca (opcional)</summary><h2>Monte seu radar</h2><p>Informe quanto pode investir e a margem estimada que procura. O ROP filtra o catálogo disponível com esses critérios.</p><div class="fields"><div><label for="radarBudget">Meu capital disponível (R$)</label><input id="radarBudget" type="number" min="0" step="10" placeholder="Ex.: 500"></div><div><label for="radarMargin">Margem estimada desejada</label><select id="radarMargin"><option value="">Qualquer margem</option><option value="0">Acima de 0%</option><option value="10">10% ou mais</option><option value="20">20% ou mais</option><option value="30">30% ou mais</option></select></div></div><button id="runRadar" type="button" style="margin-top:12px">Encontrar produtos para mim</button><p class="small">A seleção é uma triagem matemática baseada nos dados cadastrados, não uma previsão de vendas. Preços sugeridos podem não ser praticados no mercado.</p></details>
 <details class="panel" id="auditSummary" style="margin-top:14px"><summary style="cursor:pointer;font-weight:700">Como avaliamos os dados</summary><p class="small">Triagem de evidências cadastradas para os <strong id="auditTotal">0</strong> produtos. Fontes separadas não garantem SKU idêntico nem lucro. A etiqueta “VALIDADO” exige SKU confirmado e datas de verificação registradas; sem esses dados, a referência fica pendente. Não inferimos que links ou preços foram verificados apenas por estarem cadastrados.</p><div class="fields"><div><strong id="auditIndependent">0</strong><p class="small">Referências em domínios diferentes</p></div><div><strong id="auditSame">0</strong><p class="small">Custo e preço no mesmo fornecedor</p></div><div><strong id="auditIncomplete">0</strong><p class="small">Dados incompletos ou sem par comparável</p></div></div></details>
+<section class="panel" id="top-opportunities" aria-live="polite"><div class="section-heading"><h2>Melhores para analisar primeiro</h2><span class="small">Ordenadas por sobra estimada</span></div><p class="small">Só entram aqui referências com modelo identificado, custo e preço em fontes separadas e resultado positivo na simulação atual. O valor ainda pode mudar com frete, taxas e estoque.</p><div id="top-opportunities-list" class="stats"></div></section>
 <div class="catalog-count"><strong id="count">0</strong> produtos nesta seleção</div>
 
 <div class="layout">
@@ -371,7 +372,8 @@ const minimumInvestment=x=>Number(x.cost)>0?Number(x.cost)*(minimumUnits(x)||1):
 const hasPublishedPair=x=>Number(x.cost)>0 && Number(x.market)>0 && !!x.supplierUrl && !!x.marketUrl;
 const normalizeSourceUrl=u=>{try{return new URL(String(u||"")).hostname.toLowerCase().replace(/^www\./,"");}catch{return String(u||"").split("?")[0].replace(/\/+$/, "");}};
 const samePriceSource=x=>!!x.supplierUrl && !!x.marketUrl && normalizeSourceUrl(x.supplierUrl)===normalizeSourceUrl(x.marketUrl);
-const isValidated=x=>hasPublishedPair(x) && !samePriceSource(x) && x.skuMatch===true && !!x.priceCheckedAt && !!x.sourceCheckedAt;
+const verifiedSkuIds=new Set(["mini-processador-manual-0234d","balanca-digital-10kg-gp6"]);
+const isValidated=x=>verifiedSkuIds.has(x.id) && hasPublishedPair(x) && !samePriceSource(x) && x.skuMatch===true && !!x.priceCheckedAt && !!x.sourceCheckedAt;
 const confidence=x=>isValidated(x)?{label:"VALIDAÇÃO DOCUMENTADA",color:"#174d37",text:"#a7f3d0",detail:"SKU/variante confirmado e datas de conferência registradas, com custo e varejo em domínios separados. Ainda confira frete, taxas e estoque antes de comprar."}:hasPublishedPair(x)&&samePriceSource(x)?{label:"MESMA FONTE",color:"#2d3b50",text:"#ffdf9c",detail:"Custo e preço vêm do mesmo domínio/fornecedor; preço sugerido não é confirmação de preço de mercado independente."}:hasPublishedPair(x)?{label:"PENDENTE DE VALIDAÇÃO",color:"#2d3b50",text:"#ffdf9c",detail:"Existem preços e URLs em domínios diferentes, mas SKU/variante e datas de consulta não estão documentados como confirmados. Não trate como oportunidade validada."}:Number(x.cost)>0?{label:"CUSTO INFORMADO",color:"#2d3b50",text:"#ffdf9c",detail:"Há referência de custo, mas falta preço de venda comparável ou confirmação das condições completas."}:{label:"EM INVESTIGAÇÃO",color:"#2d3b50",text:"#ffdf9c",detail:"O custo de compra comparável ainda não foi confirmado. Não é possível estimar lucro com confiança."};
 const safe=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function calculate(){
@@ -423,9 +425,10 @@ function render(){
  .filter(x=>(x.name+" "+x.category+" "+x.source+" "+x.note).toLowerCase().includes(search)&&(!category||x.category===category)&&(!status||(status==="validated"?isValidated(x):!isValidated(x)))&&(()=>{const q=document.querySelector("#dataQuality").value;if(q==="separate")return isValidated(x);if(q==="cost")return Number(x.cost)>0;if(q==="missing")return !(Number(x.cost)>0);return true;})()&&(budget===null||(minimumInvestment(x)!==null?minimumInvestment(x)<=budget:(Number(x.cost)>0&&Number(x.cost)<=budget)))&&(()=>{const minMarginRaw=document.querySelector("#minMargin").value;if(minMarginRaw==="")return true;if(!isValidated(x)||!(Number(x.cost)>0&&Number(x.market)>0))return false;const fee=Math.min(100,Math.max(0,+document.querySelector("#fees").value||0))/100;const freight=Math.max(0,+document.querySelector("#freight").value||0);const extra=Math.max(0,+document.querySelector("#extra").value||0);const margin=(x.market-Number(x.cost)-x.market*fee-freight-extra)/x.market*100;return margin>=Number(minMarginRaw);})());
  // Prices are research references, not comparable purchase/sale pairs, so don't filter as if
  // their margin were known. The user can use the calculator after entering an actual resale price.
- const featuredIds=[];
+ const featuredIds=["mini-processador-manual-0234d","balanca-digital-10kg-gp6"];
  const tailIds=["mini-processador-manual-0234d","balanca-digital-10kg-gp6","caixa-organizadora-plasutil-29l","mini-processador-500ml-original-line","pote-plastico-gire-trave-plasutil"];
- filtered.sort((a,b)=>Number(isValidated(b))-Number(isValidated(a)) || Number(tailIds.includes(a.id))-Number(tailIds.includes(b.id)) || a.name.localeCompare(b.name));
+ const netEstimate=x=>Number(x.market||0)-Number(x.cost||0)-Number(x.market||0)*(Math.min(100,Math.max(0,+document.querySelector("#fees").value||0))/100)-Math.max(0,+document.querySelector("#freight").value||0)-Math.max(0,+document.querySelector("#extra").value||0);
+ filtered.sort((a,b)=>Number(isValidated(b))-Number(isValidated(a)) || (isValidated(a)&&isValidated(b)?netEstimate(b)-netEstimate(a):0) || Number(tailIds.includes(a.id))-Number(tailIds.includes(b.id)) || a.name.localeCompare(b.name));
  document.querySelector("#count").textContent=filtered.length;
  document.querySelector("#products").innerHTML=filtered.length?filtered.map(x=>`
  <article class="product">
@@ -464,6 +467,18 @@ document.querySelector("#clear").addEventListener("click",()=>{
  document.querySelector("#extra").value=0; document.querySelector("#targetMargin").value=20; document.querySelector("#quantity").value=1;
  calculate();
 });
+function renderTop3(){
+ const fee=Math.min(100,Math.max(0,+document.querySelector("#fees").value||0))/100;
+ const freight=Math.max(0,+document.querySelector("#freight").value||0);
+ const extra=Math.max(0,+document.querySelector("#extra").value||0);
+ const top=items.filter(x=>isValidated(x)&&Number(x.cost)>0&&Number(x.market)>0)
+   .map(x=>({...x,net:Number(x.market)-Number(x.cost)-Number(x.market)*fee-freight-extra}))
+   .filter(x=>x.net>0).sort((a,b)=>b.net-a.net).slice(0,3);
+ const list=document.querySelector("#top-opportunities-list");
+ list.innerHTML=top.length?top.map((x,i)=>`<div class="stat"><span class="tag">Prioridade ${i+1}</span><strong style="font-size:16px;margin:8px 0">${safe(x.name)}</strong><span class="small">Sobra estimada/unidade</span><strong>${money(x.net)}</strong><p class="small">Custo ${money(x.cost)} · referência de venda ${money(x.market)}</p><button type="button" data-topcalc="${safe(x.id)}">Calcular este produto</button></div>`).join(""):'<div class="notice">Nenhum produto com validação documental e sobra positiva nos parâmetros atuais. As demais referências continuam no catálogo para pesquisa, sem serem anunciadas como oportunidades confirmadas.</div>';
+ document.querySelectorAll("[data-topcalc]").forEach(btn=>btn.addEventListener("click",()=>{const x=items.find(y=>y.id===btn.dataset.topcalc);if(!x)return;document.querySelector("#buy").value=Number(x.cost).toFixed(2);document.querySelector("#sell").value=Number(x.market).toFixed(2);calculate();document.querySelector("#buy").scrollIntoView({behavior:"smooth",block:"center"});}));
+}
+["buy","sell","freight","fees","extra","targetMargin","quantity"].forEach(id=>document.querySelector("#"+id).addEventListener("input",()=>{calculate();render();renderTop3();}));
 render();calculate();renderTop3();
 </script>
 </body>
