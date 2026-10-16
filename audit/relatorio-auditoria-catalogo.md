@@ -1,6 +1,6 @@
 # Relatório de auditoria do catálogo ROP
 **Data:** 16/10/2026  
-**Escopo:** revisão dos 194 registros em `catalogo.html` e validação documental complementar em 16/10/2026. A vitrine pública foi restringida aos itens com par de fontes independentes, SKU correspondente e datas de consulta registradas; a publicação será conferida na Vercel.
+**Escopo:** revisão dos 194 registros em `catalogo.html` e validação documental complementar em 16/10/2026. A vitrine pública voltou a exibir a seleção curada de 91 produtos (100 IDs permitidos na lista original, 91 encontrados no catálogo), incluindo oportunidades promissoras e referências indicativas. Somente os itens com evidência documental completa são considerados validados.
 
 ## Resumo da inspeção estática
 - Registros de produtos: 194.
@@ -12,11 +12,11 @@
 - URLs de pesquisa Google em vez de página de produto: 23.
 - Registros com URL de pesquisa/listagem no campo principal ou de varejo: 100 (contagem por produto; não significa link quebrado).
 - Pares de URLs de compra e varejo no mesmo domínio: 0; domínio diferente não prova SKU equivalente.
-- Datas de verificação preenchidas após a revisão complementar: 2 produtos têm datas registradas, SKU correspondente e links de custo/varejo em domínios independentes; os outros 192 permanecem sem evidência suficiente para serem exibidos como validados.
+- Datas de verificação preenchidas após a revisão complementar: 2 produtos têm datas registradas, SKU correspondente e links de custo/varejo em domínios independentes; os outros 192 não têm validação documental completa, mas produtos da seleção curada permanecem visíveis como referências ou pistas.
 - Links não foram tratados como quebrados apenas por serem páginas de busca, exigirem JavaScript, bloquearem robôs ou pedirem seleção de variação.
 
 ## Alterações realizadas
-1. A lista fixa anterior foi reduzida para os 2 produtos com evidência documental suficiente nesta rodada; os outros registros continuam no banco de dados, mas não aparecem na vitrine pública.
+1. A lista fixa da vitrine foi restaurada para a seleção curada original, com 91 produtos efetivamente encontrados no banco de dados. A seleção inclui produtos quase promissores, referências de preço e itens que ainda precisam de confirmação.
 2. O status de validação exige fontes separadas, SKU/variante confirmado e datas estruturadas de conferência. Dois produtos agora atendem a esses critérios documentais; isso não garante estoque, preço final com frete ou lucro.
 3. Adicionados campos por produto: SKU, confirmação de equivalência, data de verificação do fornecedor, data de verificação do preço, mínimo de unidades, status de frete e status das taxas. Valores desconhecidos permanecem explicitamente pendentes.
 4. Atualizada a referência de varejo do TP-Link Archer T2U Plus para uma página específica da Pichau; custo do fornecedor ficou pendente devido à inconsistência de estoque observada.
@@ -177,4 +177,9 @@ Esses endereços são buscas dinâmicas e não foram classificados como links qu
 - Fornecedor: https://www.atacadosaopaulo.com.br/balanca-digital-10kg-gp60012-gp6---un/p
 - Varejo: https://shopee.com.br/Balan%C3%A7a-de-Cozinha-Eletronica-Digital-Uso-Domestico-Precis%C3%A3o-1g-a-10-KG-GP60012-i.398036528.22393401901
 
-**Regra para a próxima etapa:** testar primeiro estes dois itens, sem comprar estoque ainda. A decisão de compra depende de confirmar preço e estoque no checkout, frete real e taxa do canal de venda. O restante do catálogo permanece em análise e não deve ser anunciado como oportunidade validada.
+**Regra para a próxima etapa:** os produtos da vitrine estão disponíveis para avaliação e divulgação como oportunidades, pistas ou simulações, conforme a etiqueta exibida. Os dois itens descritos acima têm validação documental mais forte; os demais podem continuar na seleção sem serem confundidos com validação completa. Antes de comprar estoque, confirmar preço e estoque no checkout, frete real e taxa do canal de venda.
+
+
+## Regra de apresentação da vitrine (16/10/2026)
+
+A seleção curada voltou a mostrar os produtos promissores, mesmo quando a referência de varejo é aproximada ou a margem ainda precisa ser confirmada. Preços publicados pelo próprio fornecedor são exibidos como “Preço sugerido pelo fornecedor”; referências de outros anúncios são apresentadas como indicativas. Não se oculta um produto apenas porque ele ainda não tem validação completa, e não se rotula uma pista como oportunidade garantida.
