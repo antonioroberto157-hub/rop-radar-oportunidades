@@ -1,6 +1,6 @@
 # Relatório de auditoria do catálogo ROP
 **Data:** 16/10/2026  
-**Escopo:** revisão estática dos 194 registros em `catalogo.html`, correções no branch `audit/correcoes-catalogo-2026-10`. Não houve publicação.
+**Escopo:** revisão dos 194 registros em `catalogo.html` e validação documental complementar em 16/10/2026. A vitrine pública foi restringida aos itens com par de fontes independentes, SKU correspondente e datas de consulta registradas; a publicação será conferida na Vercel.
 
 ## Resumo da inspeção estática
 - Registros de produtos: 194.
@@ -12,15 +12,17 @@
 - URLs de pesquisa Google em vez de página de produto: 23.
 - Registros com URL de pesquisa/listagem no campo principal ou de varejo: 100 (contagem por produto; não significa link quebrado).
 - Pares de URLs de compra e varejo no mesmo domínio: 0; domínio diferente não prova SKU equivalente.
-- Datas de verificação preenchidas: 0. Todos os registros ficam pendentes até uma conferência real; campos estruturados foram adicionados sem inventar datas, SKUs ou condições.
+- Datas de verificação preenchidas após a revisão complementar: 2 produtos têm datas registradas, SKU correspondente e links de custo/varejo em domínios independentes; os outros 192 permanecem sem evidência suficiente para serem exibidos como validados.
 - Links não foram tratados como quebrados apenas por serem páginas de busca, exigirem JavaScript, bloquearem robôs ou pedirem seleção de variação.
 
 ## Alterações realizadas
-1. Removida a lista fixa de IDs que limitava a vitrine e ocultava produtos existentes.
-2. O status de validação exige fontes separadas, SKU/variante confirmado e datas estruturadas de conferência. Como essas evidências não estavam registradas nos campos próprios, nenhum produto é automaticamente promovido a validado.
+1. A lista fixa anterior foi reduzida para os 2 produtos com evidência documental suficiente nesta rodada; os outros registros continuam no banco de dados, mas não aparecem na vitrine pública.
+2. O status de validação exige fontes separadas, SKU/variante confirmado e datas estruturadas de conferência. Dois produtos agora atendem a esses critérios documentais; isso não garante estoque, preço final com frete ou lucro.
 3. Adicionados campos por produto: SKU, confirmação de equivalência, data de verificação do fornecedor, data de verificação do preço, mínimo de unidades, status de frete e status das taxas. Valores desconhecidos permanecem explicitamente pendentes.
 4. Atualizada a referência de varejo do TP-Link Archer T2U Plus para uma página específica da Pichau; custo do fornecedor ficou pendente devido à inconsistência de estoque observada.
-5. Mini processador Original Line 0234D: custo atualizado para R$ 8,99 no Pix e referência de varejo não equivalente removida.
+5. Mini processador Original Line 0234D: custo R$ 8,99 no Pix e varejo do mesmo modelo listado a R$ 20,00 no Magalu; SKU/variante cruzado com a referência do fabricante.
+7. Balança digital GP6 GP60012: custo conservador de R$ 12,70 no Pix e anúncio independente com o mesmo código a R$ 19,99. O preço de varejo é uma referência de anúncio, sujeita a mudança.
+8. A vitrine final desta rodada contém somente os dois itens abaixo. As estimativas de sobra consideram taxa hipotética de 8%, frete do vendedor zerado e não incluem embalagem, impostos ou devoluções.
 6. Removidas referências de varejo numéricas que não tinham SKU/variante comprovadamente equivalente para câmera infantil, karaokê, caixa de som 30 W, carrinho RC com fumaça, copo térmico 1,2 L, caranguejo musical e Squishy Baozi. Esses preços precisam ser reintroduzidos apenas após nova verificação.
 
 ## Produtos sem URL de fornecedor específica
@@ -154,3 +156,25 @@ Esses endereços são buscas dinâmicas e não foram classificados como links qu
 - As 194 referências ainda precisam de verificação individual de SKU/modelo, quantidade por embalagem, lote mínimo, preço com forma de pagamento, data/hora, frete, impostos e taxas do canal de venda.
 - Links de pesquisa/listagem são pistas para encontrar ofertas, não evidência de preço atual ou de produto idêntico.
 - Nenhuma margem deve ser considerada validada até que a fonte de compra e a fonte de varejo sejam específicas e comparáveis.
+
+
+## Itens liberados para a próxima etapa (16/10/2026)
+
+### 1. Mini processador manual Original Line 0234D
+- Custo de referência: R$ 8,99 no Pix.
+- Varejo observado: R$ 20,00.
+- SKU/variante: 0234D / SL0234D; EAN 7899751108621.
+- Sobra estimada após taxa hipotética de 8%, antes de frete/embalagem/impostos: R$ 9,41 por unidade.
+- Fornecedor: https://www.atacadosaopaulo.com.br/mini-processador-de-alimentos-manual-preto-0234d-original-line---un/p
+- Varejo: https://www.magazineluiza.com.br/processador-de-alimentos-500ml-preto-cook-ref-0234d-original-original-line/p/jc587e65f7/ep/peep/
+- Fabricante: https://originalline.com.br/produto/processador-de-alimentos-sl0234/
+
+### 2. Balança digital de cozinha GP6 GP60012
+- Custo de referência conservador: R$ 12,70 no Pix.
+- Varejo observado: R$ 19,99.
+- SKU/variante: GP60012.
+- Sobra estimada após taxa hipotética de 8%, antes de frete/embalagem/impostos: R$ 5,69 por unidade.
+- Fornecedor: https://www.atacadosaopaulo.com.br/balanca-digital-10kg-gp60012-gp6---un/p
+- Varejo: https://shopee.com.br/Balan%C3%A7a-de-Cozinha-Eletronica-Digital-Uso-Domestico-Precis%C3%A3o-1g-a-10-KG-GP60012-i.398036528.22393401901
+
+**Regra para a próxima etapa:** testar primeiro estes dois itens, sem comprar estoque ainda. A decisão de compra depende de confirmar preço e estoque no checkout, frete real e taxa do canal de venda. O restante do catálogo permanece em análise e não deve ser anunciado como oportunidade validada.
