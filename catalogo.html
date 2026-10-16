@@ -67,6 +67,7 @@ button,.btn{display:inline-block;border:0;border-radius:9px;padding:11px 13px;ba
 <p>Produtos e referências de compra para você analisar antes de revender.</p>
 </header>
 <section class="panel" id="meu-radar"><h2>Monte seu radar</h2><p>Informe quanto pode investir e a margem estimada que procura. O ROP filtra o catálogo disponível com esses critérios.</p><div class="fields"><div><label for="radarBudget">Meu capital disponível (R$)</label><input id="radarBudget" type="number" min="0" step="10" placeholder="Ex.: 500"></div><div><label for="radarMargin">Margem estimada desejada</label><select id="radarMargin"><option value="">Qualquer margem</option><option value="0">Acima de 0%</option><option value="10">10% ou mais</option><option value="20">20% ou mais</option><option value="30">30% ou mais</option></select></div></div><button id="runRadar" type="button" style="margin-top:12px">Encontrar produtos para mim</button><p class="small">A seleção é uma triagem matemática baseada nos dados cadastrados, não uma previsão de vendas. Preços sugeridos podem não ser praticados no mercado.</p></section>
+<section class="panel" id="auditSummary" style="margin-top:14px"><h2>Qualidade do catálogo</h2><p class="small">Triagem de evidências cadastradas para os <strong id="auditTotal">0</strong> produtos. Fonte separada não garante que o SKU seja idêntico nem que haja lucro.</p><div class="fields"><div><strong id="auditIndependent">0</strong><p class="small">Referências em domínios diferentes</p></div><div><strong id="auditSame">0</strong><p class="small">Custo e preço no mesmo fornecedor</p></div><div><strong id="auditIncomplete">0</strong><p class="small">Dados incompletos ou sem par comparável</p></div></div></section>
 <div class="catalog-count"><strong id="count">0</strong> produtos nesta seleção</div>
 
 <div class="layout">
@@ -392,6 +393,12 @@ function calculate(){
  document.querySelector("#summary").textContent="Margem sobre venda: "+margin.toLocaleString("pt-BR",{maximumFractionDigits:1})+"%. Estimativa antes de custos não informados.";
 }
 function render(){
+ const auditIndependent=items.filter(x=>isValidated(x)).length;
+ const auditSame=items.filter(x=>hasPublishedPair(x)&&samePriceSource(x)).length;
+ document.querySelector("#auditTotal").textContent=items.length;
+ document.querySelector("#auditIndependent").textContent=auditIndependent;
+ document.querySelector("#auditSame").textContent=auditSame;
+ document.querySelector("#auditIncomplete").textContent=Math.max(0,items.length-auditIndependent-auditSame);
  const search=document.querySelector("#search").value.toLowerCase();
  const category=document.querySelector("#category").value;
  const status=document.querySelector("#status").value;
